@@ -13,11 +13,16 @@
                 extend: {
                     colors: {
                         apple: {
-                            bg: '#F5F5F7', darkBg: '#000000',
-                            card: '#FFFFFF', darkCard: '#1D1D1F',
-                            text: '#1D1D1F', darkText: '#F5F5F7',
-                            subtext: '#86868B', darkSubtext: '#A1A1A6',
-                            border: '#D2D2D7', darkBorder: '#38383A',
+                            bg: 'var(--page-bg, #F5F5F7)',
+                            darkBg: 'var(--page-dark-bg, #000000)',
+                            card: 'var(--card-bg, #FFFFFF)',
+                            darkCard: 'var(--card-dark-bg, #1D1D1F)',
+                            text: '#1D1D1F',
+                            darkText: '#F5F5F7',
+                            subtext: '#86868B',
+                            darkSubtext: '#A1A1A6',
+                            border: 'var(--border-color, #D2D2D7)',
+                            darkBorder: 'var(--border-dark-color, #38383A)',
                             accent: 'var(--accent-color, #0071E3)',
                             accentHover: 'var(--accent-hover, #0077ED)'
                         }
@@ -33,6 +38,13 @@
         :root {
             --accent-color: #0071E3;
             --accent-hover: #0077ED;
+            --page-bg: #F5F5F7;
+            --page-dark-bg: #000000;
+            --card-bg: #FFFFFF;
+            --card-dark-bg: #1D1D1F;
+            --border-color: #D2D2D7;
+            --border-dark-color: #38383A;
+            --text-on-accent: #FFFFFF;
         }
         body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
         .glass-nav { background: rgba(255, 255, 255, 0.82); backdrop-filter: saturate(180px) blur(20px); }
@@ -40,16 +52,18 @@
         .glass-dock { background: rgba(29, 29, 31, 0.85); backdrop-filter: blur(24px); }
         .editable-active { outline: 2px dashed var(--accent-color) !important; outline-offset: 4px; background: rgba(0, 113, 227, 0.03); cursor: text; }
         .dynamic-accent { color: var(--accent-color); }
-        .dynamic-bg { background-color: var(--accent-color); }
+        .dynamic-bg { background-color: var(--accent-color); color: var(--text-on-accent); }
         .dynamic-border { border-color: var(--accent-color); }
+        .dynamic-card { border-color: var(--border-color); background-color: var(--card-bg); }
+        .dark .dynamic-card { border-color: var(--border-dark-color); background-color: var(--card-dark-bg); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     </style>
 </head>
-<body class="bg-apple-bg dark:bg-apple-darkBg text-apple-text dark:text-apple-darkText transition-colors duration-300 min-h-screen flex flex-col selection:bg-apple-accent selection:text-white">
+<body class="bg-[var(--page-bg)] dark:bg-[var(--page-dark-bg)] text-apple-text dark:text-apple-darkText transition-colors duration-300 min-h-screen flex flex-col selection:bg-[var(--accent-color)] selection:text-white">
 
     <!-- Global Navigation Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 h-12 glass-nav border-b border-apple-border dark:border-apple-darkBorder flex items-center justify-between px-6 lg:px-12 text-xs">
+    <header class="fixed top-0 left-0 right-0 z-50 h-12 glass-nav border-b border-[var(--border-color)] dark:border-[var(--border-dark-color)] flex items-center justify-between px-6 lg:px-12 text-xs">
         <a href="#/home" class="font-semibold tracking-tight text-sm flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full dynamic-bg"></span> TK Creative
         </a>
@@ -64,7 +78,7 @@
             <button onclick="toggleTheme()" class="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors" title="Toggle Theme">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             </button>
-            <button onclick="requestEditMode()" id="editModeIndicator" class="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 font-medium hover:bg-black/10 dark:hover:bg-white/20 transition-all flex items-center gap-1.5">
+            <button onclick="requestEditMode()" id="editModeIndicator" class="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 font-medium hover:bg-black/10 dark:hover:bg-white/25 transition-all flex items-center gap-1.5">
                 <span id="editDot" class="w-2 h-2 rounded-full bg-apple-subtext"></span>
                 <span id="editText">Studio CMS Mode</span>
             </button>
@@ -74,48 +88,48 @@
     <!-- Main Content Root Container -->
     <main id="app" class="flex-grow pt-24 pb-20 px-6 lg:px-12 max-w-7xl mx-auto w-full"></main>
 
-    <!-- Authentication Modal -->
+    <!-- Authentication Modal (Secure Guard - No Passcode Exposed) -->
     <div id="authModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-6">
-        <div class="bg-apple-card dark:bg-apple-darkCard rounded-3xl p-8 max-w-sm w-full shadow-2xl border border-apple-border dark:border-apple-darkBorder">
+        <div class="bg-apple-card dark:bg-apple-darkCard rounded-3xl p-8 max-w-sm w-full shadow-2xl border border-[var(--border-color)] dark:border-[var(--border-dark-color)]">
             <h3 class="text-lg font-semibold tracking-tight mb-2">Studio Authentication</h3>
-            <p class="text-xs text-apple-subtext dark:text-apple-darkSubtext mb-4">Enter passcode to unlock CMS & theme controls. (Default: <code class="bg-black/5 dark:bg-white/10 px-1.5 py-0.5 rounded dynamic-accent">tkcreative</code>)</p>
-            <input type="password" id="passcodeInput" placeholder="Enter passcode..." class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-apple-border dark:border-apple-darkBorder text-xs mb-4 focus:outline-none focus:border-apple-accent" onkeydown="if(event.key === 'Enter') verifyPasscode()">
+            <p class="text-xs text-apple-subtext dark:text-apple-darkSubtext mb-4">Enter your secure passcode to unlock CMS & theme controls.</p>
+            <input type="password" id="passcodeInput" placeholder="Enter passcode..." class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-[var(--border-color)] dark:border-[var(--border-dark-color)] text-xs mb-4 focus:outline-none focus:border-[var(--accent-color)]" onkeydown="if(event.key === 'Enter') verifyPasscode()">
             <div id="authError" class="text-red-500 text-[10px] mb-3 hidden">Incorrect passcode.</div>
             <div class="flex justify-end gap-2">
                 <button onclick="closeAuthModal()" class="px-4 py-2 bg-black/5 dark:bg-white/10 font-medium rounded-xl text-xs">Cancel</button>
-                <button onclick="verifyPasscode()" class="px-4 py-2 dynamic-bg text-white font-medium rounded-xl text-xs">Unlock</button>
+                <button onclick="verifyPasscode()" class="px-4 py-2 dynamic-bg font-medium rounded-xl text-xs">Unlock</button>
             </div>
         </div>
     </div>
 
-    <!-- Floating Studio Dock with Dynamic Color Customizer -->
+    <!-- Floating Studio Dock with Global Theme Customizer & Accessible Dynamic Mode -->
     <div id="studioDock" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 px-5 py-3 rounded-2xl glass-dock text-white shadow-2xl border border-white/10 animate-fade-in text-xs">
         <div class="flex items-center gap-2 font-semibold dynamic-accent pr-3 border-r border-white/10">
             <span>Dynamic CMS</span>
         </div>
         <div class="flex items-center gap-2 px-2 border-r border-white/10">
-            <label class="text-[10px] text-white/70">Accent:</label>
-            <input type="color" id="accentPicker" value="#0071E3" onchange="setCustomAccent(this.value)" class="w-6 h-6 rounded cursor-pointer bg-transparent border-0">
+            <label class="text-[10px] text-white/75">Theme Color:</label>
+            <input type="color" id="accentPicker" value="#0071E3" onchange="setCustomAccent(this.value, true)" class="w-6 h-6 rounded cursor-pointer bg-transparent border-0">
             <label class="flex items-center gap-1.5 cursor-pointer text-[11px] ml-1">
-                <input type="checkbox" id="dynamicModeToggle" onchange="toggleDynamicMode(this.checked)" class="rounded"> Dynamic Image Color
+                <input type="checkbox" id="dynamicModeToggle" onchange="toggleDynamicMode(this.checked)" class="rounded"> Accessible Dynamic Visual Mode
             </label>
         </div>
         <button onclick="addBlockPrompt()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium">＋ Block</button>
         <button onclick="openSiteMap()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium">🗺️ Pages</button>
-        <button onclick="exportHTML()" class="px-3 py-1.5 dynamic-bg text-white rounded-lg transition-colors font-medium">📥 Export</button>
+        <button onclick="exportHTML()" class="px-3 py-1.5 dynamic-bg rounded-lg transition-colors font-medium">📥 Export</button>
         <button onclick="requestEditMode()" class="p-1.5 hover:bg-white/20 rounded-lg text-white/60 hover:text-white transition-colors">🔒 Lock</button>
     </div>
 
     <!-- Block Inspector Drawer -->
-    <div id="inspectorDrawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-apple-card dark:bg-apple-darkCard shadow-2xl border-l border-apple-border dark:border-apple-darkBorder p-8 transform translate-x-full transition-transform duration-300 overflow-y-auto">
-        <div class="flex justify-between items-center mb-6 pb-4 border-b border-apple-border dark:border-apple-darkBorder">
+    <div id="inspectorDrawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-apple-card dark:bg-apple-darkCard shadow-2xl border-l border-[var(--border-color)] dark:border-[var(--border-dark-color)] p-8 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="flex justify-between items-center mb-6 pb-4 border-b border-[var(--border-color)] dark:border-[var(--border-dark-color)]">
             <h3 class="text-lg font-semibold tracking-tight">Block Configuration</h3>
             <button onclick="closeInspector()" class="text-lg">✕</button>
         </div>
         <div id="inspectorContent" class="space-y-6 text-xs"></div>
-        <div class="pt-6 mt-6 border-t border-apple-border dark:border-apple-darkBorder flex justify-end gap-3">
+        <div class="pt-6 mt-6 border-t border-[var(--border-color)] dark:border-[var(--border-dark-color)] flex justify-end gap-3">
             <button onclick="closeInspector()" class="px-4 py-2 bg-black/5 dark:bg-white/10 font-medium rounded-xl">Cancel</button>
-            <button onclick="saveInspectorChanges()" class="px-4 py-2 dynamic-bg text-white font-medium rounded-xl">Save</button>
+            <button onclick="saveInspectorChanges()" class="px-4 py-2 dynamic-bg font-medium rounded-xl">Save</button>
         </div>
     </div>
 
@@ -126,17 +140,17 @@
 
     <!-- Site Map Modal -->
     <div id="siteMapModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-6">
-        <div class="bg-apple-card dark:bg-apple-darkCard rounded-3xl p-8 max-w-2xl w-full shadow-2xl border border-apple-border dark:border-apple-darkBorder max-h-[85vh] overflow-y-auto">
+        <div class="bg-apple-card dark:bg-apple-darkCard rounded-3xl p-8 max-w-2xl w-full shadow-2xl border border-[var(--border-color)] dark:border-[var(--border-dark-color)] max-h-[85vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-semibold tracking-tight">Studio Pages</h3>
                 <button onclick="closeSiteMap()">✕</button>
             </div>
             <div id="siteMapList" class="space-y-3 mb-6"></div>
-            <button onclick="createNewPagePrompt()" class="px-4 py-2 dynamic-bg text-white font-medium rounded-xl text-xs">＋ Create New Page</button>
+            <button onclick="createNewPagePrompt()" class="px-4 py-2 dynamic-bg font-medium rounded-xl text-xs">＋ Create New Page</button>
         </div>
     </div>
 
-    <!-- Core Dynamic Theme & CMS Engine -->
+    <!-- Core Accessible Dynamic Theme & CMS Engine -->
     <script>
         let isEditMode = false;
         let activeInspector = { pageKey: null, blockIndex: null };
@@ -145,7 +159,7 @@
         // Load saved theme preferences
         let currentAccent = localStorage.getItem('tk_accent') || '#0071E3';
         let isDynamicMode = localStorage.getItem('tk_dynamic_mode') === 'true';
-        document.documentElement.style.setProperty('--accent-color', currentAccent);
+        applyThemeColors(currentAccent);
         document.getElementById('accentPicker').value = currentAccent;
         document.getElementById('dynamicModeToggle').checked = isDynamicMode;
 
@@ -210,11 +224,46 @@
             localStorage.setItem('tk_theme', isDark ? 'dark' : 'light');
         }
 
-        // Color Customizer & Dynamic Mode
+        // Accessibility & Global Theme Color Application Engine
+        function applyThemeColors(hex, save = false) {
+            currentAccent = hex;
+            const rgb = hexToRgb(hex);
+            const luminance = getLuminance(rgb.r, rgb.g, rgb.b);
+
+            // Ensure contrast ratio for accessibility (WCAG compliant text color on accent)
+            const textOnAccent = luminance > 0.5 ? '#1D1D1F' : '#FFFFFF';
+
+            // Apply global page variables (backgrounds, boxes, borders, and accents)
+            document.documentElement.style.setProperty('--accent-color', hex);
+            document.documentElement.style.setProperty('--text-on-accent', textOnAccent);
+            document.documentElement.style.setProperty('--page-bg', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.035)`);
+            document.documentElement.style.setProperty('--border-color', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2)`);
+            document.documentElement.style.setProperty('--border-dark-color', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.3)`);
+
+            if (save) {
+                localStorage.setItem('tk_accent', hex);
+            }
+        }
+
+        function hexToRgb(hex) {
+            let bigint = parseInt(hex.replace('#',''), 16);
+            return {
+                r: (bigint >> 16) & 255,
+                g: (bigint >> 8) & 255,
+                b: bigint & 255
+            };
+        }
+
+        function getLuminance(r, g, b) {
+            let a = [r, g, b].map(v => {
+                v /= 255;
+                return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+            });
+            return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+        }
+
         function setCustomAccent(color) {
-            currentAccent = color;
-            document.documentElement.style.setProperty('--accent-color', color);
-            localStorage.setItem('tk_accent', color);
+            applyThemeColors(color, true);
         }
 
         function toggleDynamicMode(enabled) {
@@ -223,7 +272,7 @@
             if (enabled) extractPageDominantColor();
         }
 
-        // Extract Dominant Color from First Image on Page (Dynamic Mode)
+        // Extract Dominant Color from First Image on Page (Accessible Dynamic Mode)
         function extractPageDominantColor() {
             if (!isDynamicMode) return;
             const firstImg = document.querySelector('main img');
@@ -241,7 +290,7 @@
                     ctx.drawImage(img, 0, 0, 1, 1);
                     const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
                     const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
-                    setCustomAccent(hex);
+                    applyThemeColors(hex, false);
                     document.getElementById('accentPicker').value = hex;
                 } catch(e) {
                     // CORS fallback safely handled
@@ -279,22 +328,22 @@
                 html += `<div class="relative group">`;
                 if (isEditMode) {
                     html += `
-                        <div class="absolute -top-4 right-0 z-20 hidden group-hover:flex items-center gap-1.5 dynamic-bg text-white px-3 py-1 rounded-md text-[10px] shadow-lg">
+                        <div class="absolute -top-4 right-0 z-20 hidden group-hover:flex items-center gap-1.5 dynamic-bg px-3 py-1 rounded-md text-[10px] shadow-lg">
                             <button onclick="openInspector('${pageKey}', ${blockIndex})" class="underline font-medium">⚙️ Configure Block</button>
                             <button onclick="moveBlock('${pageKey}', ${blockIndex}, -1)">▲</button>
                             <button onclick="moveBlock('${pageKey}', ${blockIndex}, 1)">▼</button>
-                            <button onclick="deleteBlock('${pageKey}', ${blockIndex})" class="ml-1 text-white/80">✕</button>
+                            <button onclick="deleteBlock('${pageKey}', ${blockIndex})" class="ml-1 text-white/85">✕</button>
                         </div>
                     `;
                 }
 
                 if (block.type === 'hero') {
                     html += `
-                        <div class="p-8 lg:p-14 rounded-3xl bg-white dark:bg-apple-darkCard border border-apple-border dark:border-apple-darkBorder shadow-sm">
+                        <div class="p-8 lg:p-14 rounded-3xl dynamic-card border shadow-sm">
                             <span class="text-xs uppercase tracking-widest dynamic-accent font-semibold mb-3 block">${block.tag}</span>
                             <h2 class="text-2xl lg:text-4xl font-semibold tracking-tight mb-4">${block.heading}</h2>
                             <p class="text-base lg:text-lg text-apple-subtext mb-8 max-w-2xl">${block.body}</p>
-                            <a href="${block.ctaLink}" class="px-6 py-3 dynamic-bg hover:opacity-90 text-white rounded-xl font-medium text-sm transition-opacity">${block.ctaText}</a>
+                            <a href="${block.ctaLink}" class="px-6 py-3 dynamic-bg hover:opacity-90 rounded-xl font-medium text-sm transition-opacity">${block.ctaText}</a>
                         </div>
                     `;
                 } else if (block.type === 'side_by_side_showcase') {
@@ -304,14 +353,14 @@
                     `;
                     block.cards.forEach(card => {
                         html += `
-                            <div class="p-8 lg:p-12 rounded-3xl bg-white dark:bg-apple-darkCard border border-apple-border dark:border-apple-darkBorder shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            <div class="p-8 lg:p-12 rounded-3xl dynamic-card border shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                                 <div class="lg:col-span-5 space-y-4">
                                     <span class="text-xs uppercase tracking-wider dynamic-accent font-semibold">${card.category}</span>
                                     <h3 class="text-2xl font-semibold tracking-tight">${card.title}</h3>
                                     <p class="text-sm text-apple-subtext leading-relaxed">${card.desc}</p>
                                     <a href="${card.link}" class="inline-flex items-center gap-2 text-sm font-medium dynamic-accent hover:underline">Explore Case Study →</a>
                                 </div>
-                                <div class="lg:col-span-7 rounded-2xl overflow-hidden aspect-[16/10] bg-apple-bg dark:bg-black/40 border border-apple-border dark:border-apple-darkBorder cursor-pointer shadow-md" onclick="openLightbox('${card.image}')">
+                                <div class="lg:col-span-7 rounded-2xl overflow-hidden aspect-[16/10] bg-apple-bg dark:bg-black/40 border border-[var(--border-color)] cursor-pointer shadow-md" onclick="openLightbox('${card.image}')">
                                     <img src="${card.image}" alt="${card.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
                                 </div>
                             </div>
@@ -333,7 +382,7 @@
                                 <h3 class="text-2xl font-semibold tracking-tight mb-4">${block.title}</h3>
                                 <p class="text-base text-apple-subtext leading-relaxed">${block.body}</p>
                             </div>
-                            <div class="rounded-3xl overflow-hidden bg-apple-bg dark:bg-apple-darkCard border border-apple-border dark:border-apple-darkBorder cursor-pointer shadow-md" onclick="openLightbox('${block.image}')">
+                            <div class="rounded-3xl overflow-hidden dynamic-card border cursor-pointer shadow-md" onclick="openLightbox('${block.image}')">
                                 <img src="${block.image}" alt="${block.title}" class="w-full h-auto object-cover">
                             </div>
                         </div>
@@ -379,7 +428,7 @@
             document.getElementById('inspectorContent').innerHTML = `
                 <div>
                     <label class="block font-semibold mb-1">Block Type</label>
-                    <select id="inspType" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-apple-border">
+                    <select id="inspType" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-[var(--border-color)]">
                         <option value="hero" ${block.type==='hero'?'selected':''}>Hero Banner</option>
                         <option value="side_by_side_showcase" ${block.type==='side_by_side_showcase'?'selected':''}>Side-by-Side Showcase</option>
                         <option value="editorial_header" ${block.type==='editorial_header'?'selected':''}>Editorial Header</option>
@@ -388,7 +437,7 @@
                 </div>
                 <div>
                     <label class="block font-semibold mb-1">Heading / Title</label>
-                    <input type="text" id="inspHeading" value="${block.heading || block.title || ''}" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-apple-border">
+                    <input type="text" id="inspHeading" value="${block.heading || block.title || ''}" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-[var(--border-color)]">
                 </div>
             `;
             document.getElementById('inspectorDrawer').classList.remove('translate-x-full');
