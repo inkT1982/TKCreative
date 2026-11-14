@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TK Creative — Dynamic Studio Portfolio</title>
+    <title>TK Creative — Modular Studio Portfolio</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -28,7 +28,9 @@
                         }
                     },
                     fontFamily: {
-                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif']
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                        serif: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
+                        mono: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace']
                     }
                 }
             }
@@ -111,7 +113,7 @@
             <label class="text-[10px] text-white/75">Theme Color:</label>
             <input type="color" id="accentPicker" value="#0071E3" onchange="setCustomAccent(this.value, true)" class="w-6 h-6 rounded cursor-pointer bg-transparent border-0">
             <label class="flex items-center gap-1.5 cursor-pointer text-[11px] ml-1">
-                <input type="checkbox" id="dynamicModeToggle" onchange="toggleDynamicMode(this.checked)" class="rounded"> Accessible Dynamic Visual Mode
+                <input type="checkbox" id="dynamicModeToggle" onchange="toggleDynamicMode(this.checked)" class="rounded"> Dynamic Visual Mode
             </label>
         </div>
         <button id="undoBtn" onclick="undoAction()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium opacity-50 cursor-not-allowed" disabled title="Undo last action">↩️ Undo</button>
@@ -121,7 +123,7 @@
         <button onclick="requestEditMode()" class="p-1.5 hover:bg-white/20 rounded-lg text-white/60 hover:text-white transition-colors">🔒 Lock</button>
     </div>
 
-    <!-- Block Inspector Drawer -->
+    <!-- Block Inspector Drawer (Typography & Width Controls Added) -->
     <div id="inspectorDrawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-apple-card dark:bg-apple-darkCard shadow-2xl border-l border-[var(--border-color)] dark:border-[var(--border-dark-color)] p-8 transform translate-x-full transition-transform duration-300 overflow-y-auto">
         <div class="flex justify-between items-center mb-6 pb-4 border-b border-[var(--border-color)] dark:border-[var(--border-dark-color)]">
             <h3 class="text-lg font-semibold tracking-tight">Block Configuration</h3>
@@ -151,22 +153,19 @@
         </div>
     </div>
 
-    <!-- Core Dynamic Theme, CMS & 20-Action Undo Engine -->
+    <!-- Core Dynamic Theme, CMS, Typography & Undo Engine -->
     <script>
         let isEditMode = false;
         let activeInspector = { pageKey: null, blockIndex: null };
         const STUDIO_PASSCODE = 'tkcreative';
 
-        // 20-Action Undo Memory Stack
         let undoStack = [];
 
         function recordState() {
             const currentState = JSON.stringify(pages);
             if (undoStack.length === 0 || undoStack[undoStack.length - 1] !== currentState) {
                 undoStack.push(currentState);
-                if (undoStack.length > 20) {
-                    undoStack.shift();
-                }
+                if (undoStack.length > 20) { undoStack.shift(); }
                 updateUndoUI();
             }
         }
@@ -209,12 +208,18 @@
                         heading: 'Playfulness through elegance and rhythm.',
                         body: 'Specialized in brand systems, digital experiences, and editorial storytelling.',
                         ctaText: 'Explore Speexx Case Study',
-                        ctaLink: '#/speexx-annual-kick-off-visual'
+                        ctaLink: '#/speexx-annual-kick-off-visual',
+                        width: 'max-w-5xl',
+                        fontFamily: 'font-sans',
+                        fontSize: 'text-base'
                     },
                     {
                         type: 'side_by_side_showcase',
                         heading: 'Featured Project Visuals',
                         subheading: 'Editorial Layout',
+                        width: 'max-w-5xl',
+                        fontFamily: 'font-sans',
+                        fontSize: 'text-base',
                         cards: [
                             {
                                 title: 'Speexx Annual Kick-off Visual',
@@ -238,13 +243,19 @@
                         discipline: 'Event Branding',
                         year: '2025',
                         title: 'Playfulness through elegance and rhythm',
-                        summary: 'A well organised event boosts employee engagement and contribution.'
+                        summary: 'A well organised event boosts employee engagement and contribution.',
+                        width: 'max-w-4xl',
+                        fontFamily: 'font-sans',
+                        fontSize: 'text-lg'
                     },
                     {
                         type: 'split_feature',
                         title: 'Simple, simple, simple',
                         body: 'The visual system abstracts land (Alps) and sea (Mallorca) into clean geometric languages.',
-                        image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png'
+                        image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png',
+                        width: 'max-w-5xl',
+                        fontFamily: 'font-sans',
+                        fontSize: 'text-base'
                     }
                 ]
             }
@@ -271,9 +282,7 @@
             document.documentElement.style.setProperty('--border-color', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2)`);
             document.documentElement.style.setProperty('--border-dark-color', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.3)`);
 
-            if (save) {
-                localStorage.setItem('tk_accent', hex);
-            }
+            if (save) { localStorage.setItem('tk_accent', hex); }
         }
 
         function hexToRgb(hex) {
@@ -289,9 +298,7 @@
             return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
         }
 
-        function setCustomAccent(color) {
-            applyThemeColors(color, true);
-        }
+        function setCustomAccent(color) { applyThemeColors(color, true); }
 
         function toggleDynamicMode(enabled) {
             isDynamicMode = enabled;
@@ -336,19 +343,23 @@
 
         function renderPage(pageData, pageKey) {
             let html = `
-                <div class="mb-12 animate-fade-in">
+                <div class="mb-12 animate-fade-in max-w-5xl mx-auto w-full">
                     <div class="flex justify-between items-center mb-2">
                         <span class="text-xs uppercase tracking-widest text-apple-subtext font-semibold">TK Creative Studio</span>
                         ${isEditMode ? `<button onclick="deletePage('${pageKey}')" class="text-xs text-red-500 hover:underline">Delete Page</button>` : ''}
                     </div>
                     <h1 class="text-3xl lg:text-5xl font-bold tracking-tight mb-3" contenteditable="${isEditMode}" onfocus="recordState()" onblur="updatePageProp('${pageKey}', 'title', this.innerText)">${pageData.title}</h1>
-                    <p class="text-lg text-apple-subtext max-w-2xl" contenteditable="${isEditMode}" onfocus="recordState()" onblur="updatePageProp('${pageKey}', 'subtitle', this.innerText)">${pageData.subtitle}</p>
+                    <p class="text-lg text-apple-subtext" contenteditable="${isEditMode}" onfocus="recordState()" onblur="updatePageProp('${pageKey}', 'subtitle', this.innerText)">${pageData.subtitle}</p>
                 </div>
                 <div class="space-y-16">
             `;
 
             pageData.blocks.forEach((block, blockIndex) => {
-                html += `<div class="relative group">`;
+                const blockWidth = block.width || 'max-w-5xl';
+                const fontFamily = block.fontFamily || 'font-sans';
+                const fontSize = block.fontSize || 'text-base';
+
+                html += `<div class="relative group ${blockWidth} mx-auto w-full ${fontFamily} ${fontSize}">`;
                 if (isEditMode) {
                     html += `
                         <div class="absolute -top-4 right-0 z-20 hidden group-hover:flex items-center gap-1.5 dynamic-bg px-3 py-1 rounded-md text-[10px] shadow-lg">
@@ -365,8 +376,8 @@
                         <div class="p-8 lg:p-14 rounded-3xl dynamic-card border shadow-sm">
                             <span class="text-xs uppercase tracking-widest dynamic-accent font-semibold mb-3 block">${block.tag}</span>
                             <h2 class="text-2xl lg:text-4xl font-semibold tracking-tight mb-4">${block.heading}</h2>
-                            <p class="text-base lg:text-lg text-apple-subtext mb-8 max-w-2xl">${block.body}</p>
-                            <a href="${block.ctaLink}" class="px-6 py-3 dynamic-bg hover:opacity-90 rounded-xl font-medium text-sm transition-opacity">${block.ctaText}</a>
+                            <p class="opacity-80 mb-8 max-w-2xl">${block.body}</p>
+                            <a href="${block.ctaLink}" class="px-6 py-3 dynamic-bg hover:opacity-90 rounded-xl font-medium text-sm transition-opacity inline-block">${block.ctaText}</a>
                         </div>
                     `;
                 } else if (block.type === 'side_by_side_showcase') {
@@ -380,8 +391,8 @@
                                 <div class="lg:col-span-5 space-y-4">
                                     <span class="text-xs uppercase tracking-wider dynamic-accent font-semibold">${card.category}</span>
                                     <h3 class="text-2xl font-semibold tracking-tight">${card.title}</h3>
-                                    <p class="text-sm text-apple-subtext leading-relaxed">${card.desc}</p>
-                                    <a href="${card.link}" class="inline-flex items-center gap-2 text-sm font-medium dynamic-accent hover:underline">Explore Case Study →</a>
+                                    <p class="opacity-80 leading-relaxed">${card.desc}</p>
+                                    <a href="${card.link}" class="inline-flex items-center gap-2 font-medium dynamic-accent hover:underline">Explore Case Study →</a>
                                 </div>
                                 <div class="lg:col-span-7 rounded-2xl overflow-hidden aspect-[16/10] bg-apple-bg dark:bg-black/40 border border-[var(--border-color)] cursor-pointer shadow-md" onclick="openLightbox('${card.image}')">
                                     <img src="${card.image}" alt="${card.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
@@ -392,10 +403,10 @@
                     html += `</div>`;
                 } else if (block.type === 'editorial_header') {
                     html += `
-                        <div class="max-w-4xl mx-auto py-8">
+                        <div class="py-8">
                             <div class="text-xs font-semibold uppercase tracking-widest text-apple-subtext mb-4">Client: ${block.client} • ${block.discipline} • ${block.year}</div>
                             <h2 class="text-3xl lg:text-5xl font-bold tracking-tight mb-6">${block.title}</h2>
-                            <p class="text-xl text-apple-subtext leading-relaxed">${block.summary}</p>
+                            <p class="text-xl opacity-80 leading-relaxed">${block.summary}</p>
                         </div>
                     `;
                 } else if (block.type === 'split_feature') {
@@ -403,7 +414,7 @@
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-6">
                             <div>
                                 <h3 class="text-2xl font-semibold tracking-tight mb-4">${block.title}</h3>
-                                <p class="text-base text-apple-subtext leading-relaxed">${block.body}</p>
+                                <p class="opacity-80 leading-relaxed">${block.body}</p>
                             </div>
                             <div class="rounded-3xl overflow-hidden dynamic-card border cursor-pointer shadow-md" onclick="openLightbox('${block.image}')">
                                 <img src="${block.image}" alt="${block.title}" class="w-full h-auto object-cover">
@@ -445,6 +456,7 @@
             router();
         }
 
+        // Inspector Drawer with Typography & Width Controls
         function openInspector(pageKey, blockIndex) {
             activeInspector = { pageKey, blockIndex };
             const block = pages[pageKey].blocks[blockIndex];
@@ -462,6 +474,35 @@
                     <label class="block font-semibold mb-1">Heading / Title</label>
                     <input type="text" id="inspHeading" value="${block.heading || block.title || ''}" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-[var(--border-color)]">
                 </div>
+                <div class="pt-4 border-t border-[var(--border-color)] space-y-4">
+                    <h4 class="font-bold text-apple-accent">Layout & Typography Settings</h4>
+                    <div>
+                        <label class="block font-semibold mb-1">Block Max Width</label>
+                        <select id="inspWidth" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-[var(--border-color)]">
+                            <option value="max-w-4xl" ${block.width==='max-w-4xl'?'selected':''}>Narrow (4XL)</option>
+                            <option value="max-w-5xl" ${!block.width || block.width==='max-w-5xl'?'selected':''}>Standard (5XL)</option>
+                            <option value="max-w-7xl" ${block.width==='max-w-7xl'?'selected':''}>Wide (7XL)</option>
+                            <option value="w-full" ${block.width==='w-full'?'selected':''}>Full Width</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Font Family</label>
+                        <select id="inspFont" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-[var(--border-color)]">
+                            <option value="font-sans" ${!block.fontFamily || block.fontFamily==='font-sans'?'selected':''}>San-Serif (SF Pro)</option>
+                            <option value="font-serif" ${block.fontFamily==='font-serif'?'selected':''}>Serif (Editorial)</option>
+                            <option value="font-mono" ${block.fontFamily==='font-mono'?'selected':''}>Monospace</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold mb-1">Font Size Scale</label>
+                        <select id="inspFontSize" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-[var(--border-color)]">
+                            <option value="text-sm" ${block.fontSize==='text-sm'?'selected':''}>Compact (Small)</option>
+                            <option value="text-base" ${!block.fontSize || block.fontSize==='text-base'?'selected':''}>Standard (Base)</option>
+                            <option value="text-lg" ${block.fontSize==='text-lg'?'selected':''}>Expanded (Large)</option>
+                            <option value="text-xl" ${block.fontSize==='text-xl'?'selected':''}>Editorial (Extra Large)</option>
+                        </select>
+                    </div>
+                </div>
             `;
             document.getElementById('inspectorDrawer').classList.remove('translate-x-full');
         }
@@ -471,10 +512,16 @@
         function saveInspectorChanges() {
             recordState();
             const { pageKey, blockIndex } = activeInspector;
-            pages[pageKey].blocks[blockIndex].type = document.getElementById('inspType').value;
+            const block = pages[pageKey].blocks[blockIndex];
+            block.type = document.getElementById('inspType').value;
             const val = document.getElementById('inspHeading').value;
-            if (pages[pageKey].blocks[blockIndex].heading) pages[pageKey].blocks[blockIndex].heading = val;
-            if (pages[pageKey].blocks[blockIndex].title) pages[pageKey].blocks[blockIndex].title = val;
+            if (block.heading) block.heading = val;
+            if (block.title) block.title = val;
+
+            block.width = document.getElementById('inspWidth').value;
+            block.fontFamily = document.getElementById('inspFont').value;
+            block.fontSize = document.getElementById('inspFontSize').value;
+
             savePages(); closeInspector(); router();
         }
 
@@ -496,11 +543,8 @@
             const b = pages[pk].blocks; 
             const ni = i + dir; 
             if(ni>=0 && ni<b.length){ 
-                const t = b[i]; 
-                b[i] = b[ni]; 
-                b[ni] = t; 
-                savePages(); 
-                router(); 
+                const t = b[i]; b[i] = b[ni]; b[ni] = t; 
+                savePages(); router(); 
             } 
         }
 
@@ -508,8 +552,7 @@
             if(confirm('Delete block?')) { 
                 recordState();
                 pages[pk].blocks.splice(i, 1); 
-                savePages(); 
-                router(); 
+                savePages(); router(); 
             } 
         }
 
@@ -522,10 +565,12 @@
                 type: 'split_feature', 
                 title: 'New Feature Block', 
                 body: 'Add narrative text here...', 
-                image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png' 
+                image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png',
+                width: 'max-w-5xl',
+                fontFamily: 'font-sans',
+                fontSize: 'text-base'
             });
-            savePages(); 
-            router();
+            savePages(); router();
         }
 
         function openSiteMap() {
@@ -541,7 +586,7 @@
             if(!slug) return;
             recordState();
             const cs = slug.toLowerCase().replace(/[^a-z0-9-]/g, '-');
-            pages[cs] = { title: "New Project", subtitle: "Studio overview", blocks: [{ type: 'editorial_header', client: 'Client', discipline: 'Design', year: '2026', title: 'New Case Study', summary: 'Summary...' }] };
+            pages[cs] = { title: "New Project", subtitle: "Studio overview", blocks: [{ type: 'editorial_header', client: 'Client', discipline: 'Design', year: '2026', title: 'New Case Study', summary: 'Summary...', width: 'max-w-4xl', fontFamily: 'font-sans', fontSize: 'text-base' }] };
             savePages(); openSiteMap();
         }
 
@@ -550,9 +595,7 @@
             if(confirm("Delete page?")) { 
                 recordState();
                 delete pages[pk]; 
-                savePages(); 
-                window.location.hash='#/home'; 
-                router(); 
+                savePages(); window.location.hash='#/home'; router(); 
             }
         }
 
