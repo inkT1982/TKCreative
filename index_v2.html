@@ -88,7 +88,7 @@
     <!-- Main Content Root Container -->
     <main id="app" class="flex-grow pt-24 pb-20 px-6 lg:px-12 max-w-7xl mx-auto w-full"></main>
 
-    <!-- Authentication Modal (Secure Guard - No Passcode Exposed) -->
+    <!-- Authentication Modal -->
     <div id="authModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-6">
         <div class="bg-apple-card dark:bg-apple-darkCard rounded-3xl p-8 max-w-sm w-full shadow-2xl border border-[var(--border-color)] dark:border-[var(--border-dark-color)]">
             <h3 class="text-lg font-semibold tracking-tight mb-2">Studio Authentication</h3>
@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <!-- Floating Studio Dock with Global Theme Customizer & Accessible Dynamic Mode -->
+    <!-- Floating Studio Dock -->
     <div id="studioDock" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 px-5 py-3 rounded-2xl glass-dock text-white shadow-2xl border border-white/10 animate-fade-in text-xs">
         <div class="flex items-center gap-2 font-semibold dynamic-accent pr-3 border-r border-white/10">
             <span>Dynamic CMS</span>
@@ -156,7 +156,6 @@
         let activeInspector = { pageKey: null, blockIndex: null };
         const STUDIO_PASSCODE = 'tkcreative';
 
-        // Load saved theme preferences
         let currentAccent = localStorage.getItem('tk_accent') || '#0071E3';
         let isDynamicMode = localStorage.getItem('tk_dynamic_mode') === 'true';
         applyThemeColors(currentAccent);
@@ -224,16 +223,12 @@
             localStorage.setItem('tk_theme', isDark ? 'dark' : 'light');
         }
 
-        // Accessibility & Global Theme Color Application Engine
         function applyThemeColors(hex, save = false) {
             currentAccent = hex;
             const rgb = hexToRgb(hex);
             const luminance = getLuminance(rgb.r, rgb.g, rgb.b);
-
-            // Ensure contrast ratio for accessibility (WCAG compliant text color on accent)
             const textOnAccent = luminance > 0.5 ? '#1D1D1F' : '#FFFFFF';
 
-            // Apply global page variables (backgrounds, boxes, borders, and accents)
             document.documentElement.style.setProperty('--accent-color', hex);
             document.documentElement.style.setProperty('--text-on-accent', textOnAccent);
             document.documentElement.style.setProperty('--page-bg', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.035)`);
@@ -247,11 +242,7 @@
 
         function hexToRgb(hex) {
             let bigint = parseInt(hex.replace('#',''), 16);
-            return {
-                r: (bigint >> 16) & 255,
-                g: (bigint >> 8) & 255,
-                b: bigint & 255
-            };
+            return { r: (bigint >> 16) & 255, g: (bigint >> 8) & 255, b: bigint & 255 };
         }
 
         function getLuminance(r, g, b) {
@@ -272,7 +263,6 @@
             if (enabled) extractPageDominantColor();
         }
 
-        // Extract Dominant Color from First Image on Page (Accessible Dynamic Mode)
         function extractPageDominantColor() {
             if (!isDynamicMode) return;
             const firstImg = document.querySelector('main img');
@@ -285,16 +275,13 @@
                 try {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
-                    canvas.width = 1;
-                    canvas.height = 1;
+                    canvas.width = 1; canvas.height = 1;
                     ctx.drawImage(img, 0, 0, 1, 1);
                     const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
                     const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
                     applyThemeColors(hex, false);
                     document.getElementById('accentPicker').value = hex;
-                } catch(e) {
-                    // CORS fallback safely handled
-                }
+                } catch(e) {}
             };
         }
 
@@ -459,11 +446,26 @@
         function savePages() { localStorage.setItem('tk_dynamic_pages', JSON.stringify(pages)); }
         function moveBlock(pk, i, dir) { const b = pages[pk].blocks; const ni = i + dir; if(ni>=0 && ni<b.length){ const t = b[i]; b[i] = b[ni]; b[ni] = t; savePages(); router(); } }
         function deleteBlock(pk, i) { if(confirm('Delete block?')) { pages[pk].blocks.splice(i, 1); savePages(); router(); } }
+        
+        // Fixed & Bulletproof Add Block Function
         function addBlockPrompt() {
-            const hash = window.location.hash.slice(2) || 'home';
-            pages[hash].blocks.push({ type: 'split_feature', title: 'New Feature Block', body: 'Add narrative text here...', image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png' });
-            savePages(); router();
+            let hash = window.location.hash.slice(2) || 'home';
+            if (!pages[hash]) {
+                hash = 'home';
+            }
+            if (!pages[hash].blocks) {
+                pages[hash].blocks = [];
+            }
+            pages[hash].blocks.push({ 
+                type: 'split_feature', 
+                title: 'New Feature Block', 
+                body: 'Add narrative text here...', 
+                image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png' 
+            });
+            savePages(); 
+            router();
         }
+
         function openSiteMap() {
             const list = document.getElementById('siteMapList'); list.innerHTML = '';
             Object.keys(pages).forEach(k => { list.innerHTML += `<div class="p-3 bg-apple-bg dark:bg-black/20 rounded-xl flex justify-between items-center text-xs"><span>#/${k}</span><a href="#/${k}" onclick="closeSiteMap()" class="dynamic-accent">Visit</a></div>`; });
