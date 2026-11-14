@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <!-- Floating Studio Dock -->
+    <!-- Floating Studio Dock with Undo Control -->
     <div id="studioDock" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 px-5 py-3 rounded-2xl glass-dock text-white shadow-2xl border border-white/10 animate-fade-in text-xs">
         <div class="flex items-center gap-2 font-semibold dynamic-accent pr-3 border-r border-white/10">
             <span>Dynamic CMS</span>
@@ -114,6 +114,7 @@
                 <input type="checkbox" id="dynamicModeToggle" onchange="toggleDynamicMode(this.checked)" class="rounded"> Accessible Dynamic Visual Mode
             </label>
         </div>
+        <button id="undoBtn" onclick="undoAction()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium opacity-50 cursor-not-allowed" disabled title="Undo last action">↩️ Undo</button>
         <button onclick="addBlockPrompt()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium">＋ Block</button>
         <button onclick="openSiteMap()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium">🗺️ Pages</button>
         <button onclick="exportHTML()" class="px-3 py-1.5 dynamic-bg rounded-lg transition-colors font-medium">📥 Export</button>
@@ -150,11 +151,46 @@
         </div>
     </div>
 
-    <!-- Core Accessible Dynamic Theme & CMS Engine -->
+    <!-- Core Dynamic Theme, CMS & 20-Action Undo Engine -->
     <script>
         let isEditMode = false;
         let activeInspector = { pageKey: null, blockIndex: null };
         const STUDIO_PASSCODE = 'tkcreative';
+
+        // 20-Action Undo Memory Stack
+        let undoStack = [];
+
+        function recordState() {
+            const currentState = JSON.stringify(pages);
+            if (undoStack.length === 0 || undoStack[undoStack.length - 1] !== currentState) {
+                undoStack.push(currentState);
+                if (undoStack.length > 20) {
+                    undoStack.shift();
+                }
+                updateUndoUI();
+            }
+        }
+
+        function undoAction() {
+            if (undoStack.length === 0) return;
+            const prevState = undoStack.pop();
+            pages = JSON.parse(prevState);
+            savePages();
+            router();
+            updateUndoUI();
+        }
+
+        function updateUndoUI() {
+            const btn = document.getElementById('undoBtn');
+            if (!btn) return;
+            if (undoStack.length > 0) {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
 
         let currentAccent = localStorage.getItem('tk_accent') || '#0071E3';
         let isDynamicMode = localStorage.getItem('tk_dynamic_mode') === 'true';
@@ -305,8 +341,8 @@
                         <span class="text-xs uppercase tracking-widest text-apple-subtext font-semibold">TK Creative Studio</span>
                         ${isEditMode ? `<button onclick="deletePage('${pageKey}')" class="text-xs text-red-500 hover:underline">Delete Page</button>` : ''}
                     </div>
-                    <h1 class="text-3xl lg:text-5xl font-bold tracking-tight mb-3" contenteditable="${isEditMode}" onblur="updatePageProp('${pageKey}', 'title', this.innerText)">${pageData.title}</h1>
-                    <p class="text-lg text-apple-subtext max-w-2xl" contenteditable="${isEditMode}" onblur="updatePageProp('${pageKey}', 'subtitle', this.innerText)">${pageData.subtitle}</p>
+                    <h1 class="text-3xl lg:text-5xl font-bold tracking-tight mb-3" contenteditable="${isEditMode}" onfocus="recordState()" onblur="updatePageProp('${pageKey}', 'title', this.innerText)">${pageData.title}</h1>
+                    <p class="text-lg text-apple-subtext max-w-2xl" contenteditable="${isEditMode}" onfocus="recordState()" onblur="updatePageProp('${pageKey}', 'subtitle', this.innerText)">${pageData.subtitle}</p>
                 </div>
                 <div class="space-y-16">
             `;
@@ -433,6 +469,7 @@
         function closeInspector() { document.getElementById('inspectorDrawer').classList.add('translate-x-full'); }
 
         function saveInspectorChanges() {
+            recordState();
             const { pageKey, blockIndex } = activeInspector;
             pages[pageKey].blocks[blockIndex].type = document.getElementById('inspType').value;
             const val = document.getElementById('inspHeading').value;
@@ -441,21 +478,46 @@
             savePages(); closeInspector(); router();
         }
 
+        function updatePageProp(pageKey, prop, val) {
+            pages[pageKey][prop] = val;
+            savePages();
+        }
+
         function openLightbox(url) { document.getElementById('lightboxImg').src = url; document.getElementById('lightboxModal').classList.remove('hidden'); document.getElementById('lightboxModal').classList.add('flex'); }
         function closeLightbox() { document.getElementById('lightboxModal').classList.remove('flex'); document.getElementById('lightboxModal').classList.add('hidden'); }
-        function savePages() { localStorage.setItem('tk_dynamic_pages', JSON.stringify(pages)); }
-        function moveBlock(pk, i, dir) { const b = pages[pk].blocks; const ni = i + dir; if(ni>=0 && ni<b.length){ const t = b[i]; b[i] = b[ni]; b[ni] = t; savePages(); router(); } }
-        function deleteBlock(pk, i) { if(confirm('Delete block?')) { pages[pk].blocks.splice(i, 1); savePages(); router(); } }
         
-        // Fixed & Bulletproof Add Block Function
+        function savePages() { 
+            localStorage.setItem('tk_dynamic_pages', JSON.stringify(pages)); 
+            updateUndoUI();
+        }
+
+        function moveBlock(pk, i, dir) { 
+            recordState();
+            const b = pages[pk].blocks; 
+            const ni = i + dir; 
+            if(ni>=0 && ni<b.length){ 
+                const t = b[i]; 
+                b[i] = b[ni]; 
+                b[ni] = t; 
+                savePages(); 
+                router(); 
+            } 
+        }
+
+        function deleteBlock(pk, i) { 
+            if(confirm('Delete block?')) { 
+                recordState();
+                pages[pk].blocks.splice(i, 1); 
+                savePages(); 
+                router(); 
+            } 
+        }
+
         function addBlockPrompt() {
+            recordState();
             let hash = window.location.hash.slice(2) || 'home';
-            if (!pages[hash]) {
-                hash = 'home';
-            }
-            if (!pages[hash].blocks) {
-                pages[hash].blocks = [];
-            }
+            if (!pages[hash]) { hash = 'home'; }
+            if (!pages[hash].blocks) { pages[hash].blocks = []; }
             pages[hash].blocks.push({ 
                 type: 'split_feature', 
                 title: 'New Feature Block', 
@@ -471,26 +533,42 @@
             Object.keys(pages).forEach(k => { list.innerHTML += `<div class="p-3 bg-apple-bg dark:bg-black/20 rounded-xl flex justify-between items-center text-xs"><span>#/${k}</span><a href="#/${k}" onclick="closeSiteMap()" class="dynamic-accent">Visit</a></div>`; });
             document.getElementById('siteMapModal').classList.remove('hidden'); document.getElementById('siteMapModal').classList.add('flex');
         }
+
         function closeSiteMap() { document.getElementById('siteMapModal').classList.remove('flex'); document.getElementById('siteMapModal').classList.add('hidden'); }
+
         function createNewPagePrompt() {
             const slug = prompt("Enter subpage slug (e.g. 'case-study-two'):");
             if(!slug) return;
+            recordState();
             const cs = slug.toLowerCase().replace(/[^a-z0-9-]/g, '-');
             pages[cs] = { title: "New Project", subtitle: "Studio overview", blocks: [{ type: 'editorial_header', client: 'Client', discipline: 'Design', year: '2026', title: 'New Case Study', summary: 'Summary...' }] };
             savePages(); openSiteMap();
         }
+
         function deletePage(pk) {
             if(pk==='home') { alert("Cannot delete homepage."); return; }
-            if(confirm("Delete page?")) { delete pages[pk]; savePages(); window.location.hash='#/home'; router(); }
+            if(confirm("Delete page?")) { 
+                recordState();
+                delete pages[pk]; 
+                savePages(); 
+                window.location.hash='#/home'; 
+                router(); 
+            }
         }
+
         function exportHTML() {
             const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
             const url = URL.createObjectURL(blob); const a = document.createElement('a');
             a.href = url; a.download = 'index.html'; a.click(); URL.revokeObjectURL(url);
         }
+
         function enableEditing() {
             document.querySelectorAll('h1, h2, h3, p').forEach(el => {
-                if(!el.closest('header')) { el.setAttribute('contenteditable', 'true'); el.classList.add('editable-active'); }
+                if(!el.closest('header')) { 
+                    el.setAttribute('contenteditable', 'true'); 
+                    el.classList.add('editable-active'); 
+                    el.setAttribute('onfocus', 'recordState()'); 
+                }
             });
         }
     </script>
