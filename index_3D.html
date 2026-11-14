@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TK Creative Studio — 3D Visual Showcase</title>
+    <title>TK Creative Studio — True 3D Interactive Showcase</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -41,13 +41,21 @@
         .glass-dock { background: rgba(29, 29, 31, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
         .editable-active { outline: 2px dashed #0071E3 !important; outline-offset: 4px; background: rgba(0, 113, 227, 0.03); cursor: text; }
         
-        /* 3D Stacked Cards Perspective Effect[cite: 2] */
-        .perspective-container { perspective: 1200px; }
-        .card-stack-item {
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+        /* True 3D Perspective & Tilt Container */
+        .perspective-container { perspective: 1400px; transform-style: preserve-3d; }
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            will-change: transform;
         }
-        .card-stack-item:hover {
-            transform: translateY(-8px) rotateX(2deg) rotateY(-2deg) scale(1.02);
+        .card-glare {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -59,7 +67,7 @@
     <!-- Global Navigation Header -->
     <header class="fixed top-0 left-0 right-0 z-50 h-12 glass-nav border-b border-apple-border dark:border-apple-darkBorder flex items-center justify-between px-6 lg:px-12 text-xs">
         <a href="#/home" class="font-semibold tracking-tight text-sm flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-apple-accent"></span> TK Creative 3D
+            <span class="w-2.5 h-2.5 rounded-full bg-apple-accent"></span> TK Creative True 3D
         </a>
         <nav class="hidden md:flex items-center gap-8 font-medium text-apple-subtext dark:text-apple-darkSubtext">
             <a href="#/home" class="hover:text-apple-text dark:hover:text-apple-darkText transition-colors">Overview</a>
@@ -84,11 +92,11 @@
         <!-- Rendered dynamically by router -->
     </main>
 
-    <!-- Floating Studio Inspector Dock (Visible in Edit Mode) -->
+    <!-- Floating Studio Inspector Dock -->
     <div id="studioDock" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 px-5 py-3 rounded-2xl glass-dock text-white shadow-2xl border border-white/10 animate-fade-in text-xs">
         <div class="flex items-center gap-2 font-semibold text-apple-accent pr-3 border-r border-white/10">
             <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-            <span>3D CMS Active</span>
+            <span>True 3D CMS Active</span>
         </div>
         <button onclick="addBlockPrompt()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium">＋ Add Section</button>
         <button onclick="openSiteMap()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium">🗺️ Site Map</button>
@@ -143,7 +151,7 @@
 
         const defaultPages = {
             'home': {
-                title: "TK Creative Studio — 3D Edition",
+                title: "TK Creative Studio — True 3D Edition",
                 subtitle: "The creative portfolio of TKCreative, covering tech, branding, communication, editorial, and marketing.",
                 blocks: [
                     {
@@ -157,7 +165,7 @@
                     {
                         type: 'stacked_cards_showcase',
                         heading: 'Featured Project Ecosystems',
-                        subheading: '3D Perspective Stacked Display',
+                        subheading: 'True 3D Interactive Tilt Showcase',
                         cards: [
                             {
                                 title: 'Speexx Annual Kick-off Visual',
@@ -195,7 +203,7 @@
                     {
                         type: 'stacked_cards_showcase',
                         heading: 'Archive Showcase',
-                        subheading: 'Perspective Card Layout',
+                        subheading: 'True 3D Tilt Layout',
                         cards: [
                             {
                                 title: 'Speexx Annual Kick-off Visual',
@@ -259,7 +267,7 @@
             }
         };
 
-        let pages = JSON.parse(localStorage.getItem('tk_creative_3d_pages') || JSON.stringify(defaultPages));
+        let pages = JSON.parse(localStorage.getItem('tk_creative_true_3d_pages') || JSON.stringify(defaultPages));
         let currentTheme = localStorage.getItem('tk_creative_theme') || 'light';
 
         if (currentTheme === 'dark') document.documentElement.classList.add('dark');
@@ -275,6 +283,7 @@
             document.title = pageData.title;
             document.getElementById('app').innerHTML = renderPage(pageData, hash);
             if (isEditMode) enableEditing();
+            init3DTiltEffects();
             window.scrollTo(0, 0);
         }
 
@@ -285,7 +294,7 @@
             let html = `
                 <div class="mb-12 animate-fade-in">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs uppercase tracking-widest text-apple-subtext dark:text-apple-darkSubtext font-semibold">TK Creative 3D Studio</span>
+                        <span class="text-xs uppercase tracking-widest text-apple-subtext dark:text-apple-darkSubtext font-semibold">TK Creative True 3D Studio</span>
                         ${isEditMode ? `<button onclick="deletePage('${pageKey}')" class="text-xs text-red-500 hover:underline">Delete Page</button>` : ''}
                     </div>
                     <h1 class="text-3xl lg:text-5xl font-bold tracking-tight mb-3" contenteditable="${isEditMode}" onblur="updatePageProp('${pageKey}', 'title', this.innerText)">${pageData.title}</h1>
@@ -321,31 +330,32 @@
                         </div>
                     `;
                 } else if (layout === 'stacked_cards_showcase' || block.type === 'stacked_cards_showcase') {
-                    // Side text + 3D Stacked perspective cards[cite: 2]
+                    // True 3D Interactive Tilt Stacked Cards Layout
                     html += `
                         <div class="p-8 lg:p-14 rounded-3xl bg-white dark:bg-apple-darkCard border border-apple-border dark:border-apple-darkBorder shadow-sm">
                             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                                 <div class="lg:col-span-5 space-y-4">
                                     <span class="text-xs uppercase tracking-widest text-apple-accent font-semibold">${block.subheading || 'Visual Showcase'}</span>
                                     <h2 class="text-3xl lg:text-4xl font-semibold tracking-tight">${block.heading}</h2>
-                                    <p class="text-sm text-apple-subtext dark:text-apple-darkSubtext leading-relaxed">Explore featured project visual systems rendered through interactive 3D perspective layers[cite: 2].</p>
+                                    <p class="text-sm text-apple-subtext dark:text-apple-darkSubtext leading-relaxed">Hover and move your cursor across the cards below to experience real-time 3D tilt tracking, spatial depth, and lighting reflection.</p>
                                     <div class="pt-4">
-                                        <span class="inline-flex items-center gap-2 text-xs font-medium text-apple-accent bg-apple-accent/10 px-3 py-1.5 rounded-full">✨ 3D Stacked Perspective Mode</span>
+                                        <span class="inline-flex items-center gap-2 text-xs font-medium text-apple-accent bg-apple-accent/10 px-3 py-1.5 rounded-full">✨ True Interactive 3D Physics</span>
                                     </div>
                                 </div>
-                                <div class="lg:col-span-7 perspective-container py-8 relative">
-                                    <div class="relative w-full max-w-md mx-auto h-[380px]">
+                                <div class="lg:col-span-7 perspective-container py-12 relative">
+                                    <div class="relative w-full max-w-md mx-auto h-[400px]">
                     `;
                     
                     block.cards.forEach((card, cIdx) => {
                         const offsets = [
-                            'top-0 left-0 z-30 rotate-[-4deg]',
-                            'top-16 left-6 z-20 rotate-[2deg] scale-[0.96] opacity-95',
-                            'top-32 left-12 z-10 rotate-[6deg] scale-[0.92] opacity-90'
+                            'top-0 left-0 z-30 translate-z-[40px]',
+                            'top-16 left-6 z-20 translate-z-[20px] scale-[0.96] opacity-95',
+                            'top-32 left-12 z-10 translate-z-[0px] scale-[0.92] opacity-90'
                         ];
                         const posClass = offsets[cIdx % offsets.length];
                         html += `
-                            <div class="absolute ${posClass} w-full card-stack-item p-6 rounded-3xl bg-apple-card dark:bg-[#2C2C2E] border border-apple-border dark:border-apple-darkBorder shadow-2xl cursor-pointer" onclick="window.location.href='${card.link}'">
+                            <div class="absolute ${posClass} w-full tilt-card p-6 rounded-3xl bg-apple-card dark:bg-[#2C2C2E] border border-apple-border dark:border-apple-darkBorder shadow-2xl cursor-pointer" onclick="window.location.href='${card.link}'">
+                                <div class="card-glare"></div>
                                 <div class="flex justify-between items-center mb-3">
                                     <span class="text-[10px] uppercase tracking-wider text-apple-accent font-semibold">${card.category}</span>
                                     <span class="text-[10px] px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-apple-subtext">${card.badge}</span>
@@ -429,6 +439,44 @@
             return html;
         }
 
+        // True 3D Tilt Physics & Lighting Glare Engine
+        function init3DTiltEffects() {
+            const cards = document.querySelectorAll('.tilt-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; // x position within card
+                    const y = e.clientY - rect.top;  // y position within card
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    // Calculate rotation angles (max 12 degrees)
+                    const rotateX = -((y - centerY) / centerY) * 12;
+                    const rotateY = ((x - centerX) / centerX) * 12;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale3d(1.02, 1.02, 1.02)`;
+                    card.style.boxShadow = `${-rotateY * 2}px ${rotateX * 2}px 30px rgba(0,0,0,0.2)`;
+
+                    // Dynamic Glare
+                    const glare = card.querySelector('.card-glare');
+                    if (glare) {
+                        const percentX = (x / rect.width) * 100;
+                        const percentY = (y / rect.height) * 100;
+                        glare.style.opacity = '0.4';
+                        glare.style.background = `radial-gradient(circle at ${percentX}% ${percentY}%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)`;
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale3d(1, 1, 1)';
+                    card.style.boxShadow = '';
+                    const glare = card.querySelector('.card-glare');
+                    if (glare) glare.style.opacity = '0';
+                });
+            });
+        }
+
         function openConfigModal(pageKey, blockIndex) {
             activeConfig = { pageKey, blockIndex };
             const block = pages[pageKey].blocks[blockIndex];
@@ -438,7 +486,7 @@
                 <div class="space-y-3">
                     <label class="block font-medium text-apple-text dark:text-apple-darkText">Select Visual Display Layout Format:</label>
                     <select id="layoutSelect" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-apple-border dark:border-apple-darkBorder font-medium">
-                        <option value="stacked_cards_showcase" ${block.layout === 'stacked_cards_showcase' || block.type === 'stacked_cards_showcase' ? 'selected' : ''}>3D Perspective Stacked Cards</option>
+                        <option value="stacked_cards_showcase" ${block.layout === 'stacked_cards_showcase' || block.type === 'stacked_cards_showcase' ? 'selected' : ''}>True 3D Tilt Stacked Cards</option>
                         <option value="bento" ${block.layout === 'bento' || block.type === 'bento' ? 'selected' : ''}>Asymmetric Bento Grid</option>
                         <option value="hero" ${block.layout === 'hero' || block.type === 'hero' ? 'selected' : ''}>Cinematic Hero Banner</option>
                         <option value="split_feature" ${block.layout === 'split_feature' || block.type === 'split_feature' ? 'selected' : ''}>Split Media & Text</option>
@@ -536,7 +584,7 @@
         }
 
         function savePages() {
-            localStorage.setItem('tk_creative_3d_pages', JSON.stringify(pages));
+            localStorage.setItem('tk_creative_true_3d_pages', JSON.stringify(pages));
         }
 
         function moveBlock(pageKey, index, direction) {
