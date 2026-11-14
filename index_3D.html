@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK Creative Studio — 3D Visual Showcase</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            bg: '#F5F5F7',
+                            darkBg: '#000000',
+                            card: '#FFFFFF',
+                            darkCard: '#1D1D1F',
+                            text: '#1D1D1F',
+                            darkText: '#F5F5F7',
+                            subtext: '#86868B',
+                            darkSubtext: '#A1A1A6',
+                            border: '#D2D2D7',
+                            darkBorder: '#38383A',
+                            accent: '#0071E3',
+                            accentHover: '#0077ED'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+        .glass-nav { background: rgba(255, 255, 255, 0.82); backdrop-filter: saturate(180px) blur(20px); -webkit-backdrop-filter: saturate(180px) blur(20px); }
+        .dark .glass-nav { background: rgba(0, 0, 0, 0.82); }
+        .glass-dock { background: rgba(29, 29, 31, 0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+        .editable-active { outline: 2px dashed #0071E3 !important; outline-offset: 4px; background: rgba(0, 113, 227, 0.03); cursor: text; }
+        
+        /* 3D Stacked Cards Perspective Effect[cite: 2] */
+        .perspective-container { perspective: 1200px; }
+        .card-stack-item {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+        }
+        .card-stack-item:hover {
+            transform: translateY(-8px) rotateX(2deg) rotateY(-2deg) scale(1.02);
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    </style>
+</head>
+<body class="bg-apple-bg dark:bg-apple-darkBg text-apple-text dark:text-apple-darkText transition-colors duration-300 min-h-screen flex flex-col selection:bg-apple-accent selection:text-white">
+
+    <!-- Global Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 h-12 glass-nav border-b border-apple-border dark:border-apple-darkBorder flex items-center justify-between px-6 lg:px-12 text-xs">
+        <a href="#/home" class="font-semibold tracking-tight text-sm flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-apple-accent"></span> TK Creative 3D
+        </a>
+        <nav class="hidden md:flex items-center gap-8 font-medium text-apple-subtext dark:text-apple-darkSubtext">
+            <a href="#/home" class="hover:text-apple-text dark:hover:text-apple-darkText transition-colors">Overview</a>
+            <a href="#/work" class="hover:text-apple-text dark:hover:text-apple-darkText transition-colors">Work</a>
+            <a href="#/speexx-annual-kick-off-visual" class="hover:text-apple-text dark:hover:text-apple-darkText transition-colors">Speexx Case Study</a>
+            <a href="#/studio" class="hover:text-apple-text dark:hover:text-apple-darkText transition-colors">Studio</a>
+            <a href="#/contact" class="hover:text-apple-text dark:hover:text-apple-darkText transition-colors">Contact</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <button id="themeToggleBtn" onclick="toggleTheme()" class="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors" title="Toggle Theme">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </button>
+            <button onclick="toggleEditMode()" id="editModeIndicator" class="px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 font-medium hover:bg-black/10 dark:hover:bg-white/20 transition-all flex items-center gap-1.5">
+                <span id="editDot" class="w-2 h-2 rounded-full bg-apple-subtext"></span>
+                <span id="editText">Studio Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Root Container -->
+    <main id="app" class="flex-grow pt-24 pb-20 px-6 lg:px-12 max-w-7xl mx-auto w-full">
+        <!-- Rendered dynamically by router -->
+    </main>
+
+    <!-- Floating Studio Inspector Dock (Visible in Edit Mode) -->
+    <div id="studioDock" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-3 px-5 py-3 rounded-2xl glass-dock text-white shadow-2xl border border-white/10 animate-fade-in text-xs">
+        <div class="flex items-center gap-2 font-semibold text-apple-accent pr-3 border-r border-white/10">
+            <svg class="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            <span>3D CMS Active</span>
+        </div>
+        <button onclick="addBlockPrompt()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium">＋ Add Section</button>
+        <button onclick="openSiteMap()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors font-medium">🗺️ Site Map</button>
+        <button onclick="exportHTML()" class="px-3 py-1.5 bg-apple-accent hover:bg-apple-accentHover text-white rounded-lg transition-colors font-medium">📥 Export index_3D.html</button>
+        <button onclick="toggleEditMode()" class="p-1.5 hover:bg-white/20 rounded-lg text-white/60 hover:text-white transition-colors" title="Close CMS">✕</button>
+    </div>
+
+    <!-- Block Configuration Modal -->
+    <div id="configModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-6">
+        <div class="bg-apple-card dark:bg-apple-darkCard rounded-3xl p-8 max-w-lg w-full shadow-2xl border border-apple-border dark:border-apple-darkBorder">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h3 class="text-xl font-semibold tracking-tight">Configure Block Layout</h3>
+                    <p class="text-xs text-apple-subtext dark:text-apple-darkSubtext mt-1">Switch visual display formats for this block.</p>
+                </div>
+                <button onclick="closeConfigModal()" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+            </div>
+            <div id="configFormContent" class="space-y-4 mb-6 text-xs"></div>
+            <div class="flex justify-end gap-3 pt-4 border-t border-apple-border dark:border-apple-darkBorder">
+                <button onclick="closeConfigModal()" class="px-4 py-2 bg-black/5 dark:bg-white/10 font-medium rounded-xl">Cancel</button>
+                <button onclick="saveBlockConfig()" class="px-4 py-2 bg-apple-accent text-white font-medium rounded-xl hover:bg-apple-accentHover">Apply Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-6" onclick="closeLightbox()">
+        <img id="lightboxImg" src="" alt="Zoomed Slide" class="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl">
+    </div>
+
+    <!-- Site Map Modal -->
+    <div id="siteMapModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-6">
+        <div class="bg-apple-card dark:bg-apple-darkCard rounded-3xl p-8 max-w-2xl w-full shadow-2xl border border-apple-border dark:border-apple-darkBorder max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h3 class="text-xl font-semibold tracking-tight">Visual Site Map & Interlinks</h3>
+                    <p class="text-xs text-apple-subtext dark:text-apple-darkSubtext mt-1">Manage pages and routes.</p>
+                </div>
+                <button onclick="closeSiteMap()" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+            </div>
+            <div id="siteMapList" class="space-y-3 mb-6"></div>
+            <div class="pt-4 border-t border-apple-border dark:border-apple-darkBorder flex justify-between items-center">
+                <button onclick="createNewPagePrompt()" class="px-4 py-2 bg-apple-accent text-white font-medium rounded-xl text-xs hover:bg-apple-accentHover transition-colors">＋ Create New Subpage</button>
+                <button onclick="closeSiteMap()" class="px-4 py-2 bg-black/5 dark:bg-white/10 font-medium rounded-xl text-xs">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isEditMode = false;
+        let activeConfig = { pageKey: null, blockIndex: null };
+
+        const defaultPages = {
+            'home': {
+                title: "TK Creative Studio — 3D Edition",
+                subtitle: "The creative portfolio of TKCreative, covering tech, branding, communication, editorial, and marketing.",
+                blocks: [
+                    {
+                        type: 'hero',
+                        tag: 'Selected Studio Work',
+                        heading: 'Playfulness through elegance and rhythm.',
+                        body: 'Specialized in brand systems, digital experiences, and editorial storytelling for category leaders.',
+                        ctaText: 'Explore Speexx Case Study',
+                        ctaLink: '#/speexx-annual-kick-off-visual'
+                    },
+                    {
+                        type: 'stacked_cards_showcase',
+                        heading: 'Featured Project Ecosystems',
+                        subheading: '3D Perspective Stacked Display',
+                        cards: [
+                            {
+                                title: 'Speexx Annual Kick-off Visual',
+                                category: 'Event Branding',
+                                desc: 'Alps and Mallorca brand system abstraction combining soft gradients and geometric precision.',
+                                link: '#/speexx-annual-kick-off-visual',
+                                badge: 'Featured 2025',
+                                image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png'
+                            },
+                            {
+                                title: 'Ultimate.ai Customer Service Trends',
+                                category: 'Editorial Report',
+                                desc: 'Omnichannel trends and local LLM data privacy for modern enterprise platforms.',
+                                link: '#/ultimateai-customer-service-trend-report-2021',
+                                badge: 'AI & Enterprise',
+                                image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/035267cb2db84d6c93eca73870b59198/original/Portfolio-202590.jpg'
+                            }
+                        ]
+                    },
+                    {
+                        type: 'toolkit',
+                        heading: 'Professional Toolkit',
+                        items: [
+                            { title: 'Design Expertise', desc: 'Mastery of Adobe Creative Suite, Figma, Sketch and prototyping tools.' },
+                            { title: 'Visual Storytelling', desc: 'Compelling visual narratives that communicate brand values and engage target audiences.' },
+                            { title: 'Project Leadership', desc: 'Experienced in agile methodologies and project management.' }
+                        ]
+                    }
+                ]
+            },
+            'work': {
+                title: "Selected Works — TK Creative",
+                subtitle: "A curated archive of brand systems and editorial projects.",
+                blocks: [
+                    {
+                        type: 'stacked_cards_showcase',
+                        heading: 'Archive Showcase',
+                        subheading: 'Perspective Card Layout',
+                        cards: [
+                            {
+                                title: 'Speexx Annual Kick-off Visual',
+                                category: 'Event Branding',
+                                desc: 'Playfulness through elegance and rhythm: Speexx annual kick-off event branding journey.',
+                                link: '#/speexx-annual-kick-off-visual',
+                                badge: '2025 Project',
+                                image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png'
+                            }
+                        ]
+                    }
+                ]
+            },
+            'speexx-annual-kick-off-visual': {
+                title: "Speexx Annual Kick-off Visual — TK Creative",
+                subtitle: "Playfulness through elegance and rhythm: Speexx annual kick-off event branding journey.",
+                blocks: [
+                    {
+                        type: 'editorial_header',
+                        client: 'Speexx',
+                        discipline: 'Event Branding & Visual System',
+                        year: '2025',
+                        title: 'Playfulness through elegance and rhythm: Speexx annual kick-off event branding journey',
+                        summary: 'A well organised event boosts employee engagement and contribution to the company.'
+                    },
+                    {
+                        type: 'split_feature',
+                        title: 'Simple, simple, simple',
+                        body: 'The visual system cleverly abstracts land (Alps) and sea (Mallorca) into simple geometric languages.',
+                        image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png'
+                    }
+                ]
+            },
+            'studio': {
+                title: "Studio — TK Creative",
+                subtitle: "Independent design and brand systems practice.",
+                blocks: [
+                    {
+                        type: 'hero',
+                        tag: 'The Practice',
+                        heading: 'Crafting timeless systems for modern brands.',
+                        body: 'We partner with ambitious founders and product teams.',
+                        ctaText: 'Get in Touch',
+                        ctaLink: '#/contact'
+                    }
+                ]
+            },
+            'contact': {
+                title: "Contact — TK Creative",
+                subtitle: "Start a conversation.",
+                blocks: [
+                    {
+                        type: 'hero',
+                        tag: 'Inquiries',
+                        heading: 'Let’s create something exceptional together.',
+                        body: 'Reach out directly via email.',
+                        ctaText: 'hello@tkcreative.studio',
+                        ctaLink: 'mailto:hello@tkcreative.studio'
+                    }
+                ]
+            }
+        };
+
+        let pages = JSON.parse(localStorage.getItem('tk_creative_3d_pages') || JSON.stringify(defaultPages));
+        let currentTheme = localStorage.getItem('tk_creative_theme') || 'light';
+
+        if (currentTheme === 'dark') document.documentElement.classList.add('dark');
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('tk_creative_theme', isDark ? 'dark' : 'light');
+        }
+
+        function router() {
+            const hash = window.location.hash.slice(2) || 'home';
+            const pageData = pages[hash] || pages['home'];
+            document.title = pageData.title;
+            document.getElementById('app').innerHTML = renderPage(pageData, hash);
+            if (isEditMode) enableEditing();
+            window.scrollTo(0, 0);
+        }
+
+        window.addEventListener('hashchange', router);
+        window.addEventListener('DOMContentLoaded', router);
+
+        function renderPage(pageData, pageKey) {
+            let html = `
+                <div class="mb-12 animate-fade-in">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs uppercase tracking-widest text-apple-subtext dark:text-apple-darkSubtext font-semibold">TK Creative 3D Studio</span>
+                        ${isEditMode ? `<button onclick="deletePage('${pageKey}')" class="text-xs text-red-500 hover:underline">Delete Page</button>` : ''}
+                    </div>
+                    <h1 class="text-3xl lg:text-5xl font-bold tracking-tight mb-3" contenteditable="${isEditMode}" onblur="updatePageProp('${pageKey}', 'title', this.innerText)">${pageData.title}</h1>
+                    <p class="text-lg text-apple-subtext dark:text-apple-darkSubtext max-w-2xl font-normal" contenteditable="${isEditMode}" onblur="updatePageProp('${pageKey}', 'subtitle', this.innerText)">${pageData.subtitle}</p>
+                </div>
+                <div class="space-y-16">
+            `;
+
+            pageData.blocks.forEach((block, blockIndex) => {
+                html += `<div class="relative group">`;
+                if (isEditMode) {
+                    html += `
+                        <div class="absolute -top-4 right-0 z-20 hidden group-hover:flex items-center gap-1.5 bg-apple-accent text-white px-3 py-1 rounded-md text-[10px] shadow-lg">
+                            <button onclick="openConfigModal('${pageKey}', ${blockIndex})" class="underline font-medium">⚙️ Configure Block</button>
+                            <button onclick="moveBlock('${pageKey}', ${blockIndex}, -1)">▲</button>
+                            <button onclick="moveBlock('${pageKey}', ${blockIndex}, 1)">▼</button>
+                            <button onclick="deleteBlock('${pageKey}', ${blockIndex})" class="ml-1 text-white/80 hover:text-white">✕ Remove</button>
+                        </div>
+                    `;
+                }
+
+                const layout = block.layout || block.type;
+
+                if (layout === 'hero') {
+                    html += `
+                        <div class="p-8 lg:p-14 rounded-3xl bg-white dark:bg-apple-darkCard border border-apple-border dark:border-apple-darkBorder shadow-sm">
+                            <span class="text-xs uppercase tracking-widest text-apple-accent font-semibold mb-3 block" contenteditable="${isEditMode}" onblur="updateBlockProp('${pageKey}', ${blockIndex}, 'tag', this.innerText)">${block.tag}</span>
+                            <h2 class="text-2xl lg:text-4xl font-semibold tracking-tight mb-4 max-w-3xl" contenteditable="${isEditMode}" onblur="updateBlockProp('${pageKey}', ${blockIndex}, 'heading', this.innerText)">${block.heading}</h2>
+                            <p class="text-base lg:text-lg text-apple-subtext dark:text-apple-darkSubtext mb-8 max-w-2xl" contenteditable="${isEditMode}" onblur="updateBlockProp('${pageKey}', ${blockIndex}, 'body', this.innerText)">${block.body}</p>
+                            <div class="flex items-center gap-4">
+                                <a href="${block.ctaLink}" class="px-6 py-3 bg-apple-accent hover:bg-apple-accentHover text-white rounded-xl font-medium text-sm transition-all shadow-sm">${block.ctaText}</a>
+                            </div>
+                        </div>
+                    `;
+                } else if (layout === 'stacked_cards_showcase' || block.type === 'stacked_cards_showcase') {
+                    // Side text + 3D Stacked perspective cards[cite: 2]
+                    html += `
+                        <div class="p-8 lg:p-14 rounded-3xl bg-white dark:bg-apple-darkCard border border-apple-border dark:border-apple-darkBorder shadow-sm">
+                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                                <div class="lg:col-span-5 space-y-4">
+                                    <span class="text-xs uppercase tracking-widest text-apple-accent font-semibold">${block.subheading || 'Visual Showcase'}</span>
+                                    <h2 class="text-3xl lg:text-4xl font-semibold tracking-tight">${block.heading}</h2>
+                                    <p class="text-sm text-apple-subtext dark:text-apple-darkSubtext leading-relaxed">Explore featured project visual systems rendered through interactive 3D perspective layers[cite: 2].</p>
+                                    <div class="pt-4">
+                                        <span class="inline-flex items-center gap-2 text-xs font-medium text-apple-accent bg-apple-accent/10 px-3 py-1.5 rounded-full">✨ 3D Stacked Perspective Mode</span>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-7 perspective-container py-8 relative">
+                                    <div class="relative w-full max-w-md mx-auto h-[380px]">
+                    `;
+                    
+                    block.cards.forEach((card, cIdx) => {
+                        const offsets = [
+                            'top-0 left-0 z-30 rotate-[-4deg]',
+                            'top-16 left-6 z-20 rotate-[2deg] scale-[0.96] opacity-95',
+                            'top-32 left-12 z-10 rotate-[6deg] scale-[0.92] opacity-90'
+                        ];
+                        const posClass = offsets[cIdx % offsets.length];
+                        html += `
+                            <div class="absolute ${posClass} w-full card-stack-item p-6 rounded-3xl bg-apple-card dark:bg-[#2C2C2E] border border-apple-border dark:border-apple-darkBorder shadow-2xl cursor-pointer" onclick="window.location.href='${card.link}'">
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-[10px] uppercase tracking-wider text-apple-accent font-semibold">${card.category}</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/10 text-apple-subtext">${card.badge}</span>
+                                </div>
+                                <h3 class="text-lg font-semibold tracking-tight mb-2">${card.title}</h3>
+                                <p class="text-xs text-apple-subtext dark:text-apple-darkSubtext line-clamp-2 mb-4">${card.desc}</p>
+                                ${card.image ? `<div class="rounded-2xl overflow-hidden aspect-video bg-apple-bg dark:bg-black/40 border border-apple-border dark:border-apple-darkBorder"><img src="${card.image}" alt="${card.title}" class="w-full h-full object-cover"></div>` : ''}
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (layout === 'bento' || block.type === 'bento') {
+                    html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-6">`;
+                    block.cards.forEach((card) => {
+                        html += `
+                            <div class="p-8 rounded-3xl bg-white dark:bg-apple-darkCard border border-apple-border dark:border-apple-darkBorder shadow-sm flex flex-col justify-between">
+                                <div>
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-xs uppercase tracking-wider text-apple-accent font-semibold">${card.category}</span>
+                                        <span class="text-[11px] px-2.5 py-1 rounded-full bg-apple-bg dark:bg-black/40 text-apple-subtext">${card.badge}</span>
+                                    </div>
+                                    <h3 class="text-xl font-semibold tracking-tight mb-2">${card.title}</h3>
+                                    <p class="text-sm text-apple-subtext dark:text-apple-darkSubtext mb-6">${card.desc}</p>
+                                </div>
+                                <div>
+                                    ${card.image ? `<div class="rounded-2xl overflow-hidden mb-6 aspect-video bg-apple-bg dark:bg-black/50 border border-apple-border dark:border-apple-darkBorder cursor-pointer" onclick="openLightbox('${card.image}')"><img src="${card.image}" alt="${card.title}" class="w-full h-full object-cover"></div>` : ''}
+                                    <a href="${card.link}" class="text-sm font-medium text-apple-accent hover:underline flex items-center gap-1">View Case Study →</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (layout === 'editorial_header') {
+                    html += `
+                        <div class="max-w-4xl mx-auto py-8">
+                            <div class="flex flex-wrap gap-3 items-center text-xs font-semibold uppercase tracking-widest text-apple-subtext dark:text-apple-darkSubtext mb-4">
+                                <span>Client: ${block.client}</span><span>•</span><span>${block.discipline}</span><span>•</span><span>${block.year}</span>
+                            </div>
+                            <h2 class="text-3xl lg:text-5xl font-bold tracking-tight mb-6 leading-tight">${block.title}</h2>
+                            <p class="text-xl text-apple-subtext dark:text-apple-darkSubtext leading-relaxed font-normal">${block.summary}</p>
+                        </div>
+                    `;
+                } else if (layout === 'split_feature') {
+                    html += `
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-6">
+                            <div>
+                                <h3 class="text-2xl font-semibold tracking-tight mb-4">${block.title}</h3>
+                                <p class="text-base text-apple-subtext dark:text-apple-darkSubtext leading-relaxed">${block.body}</p>
+                            </div>
+                            <div class="rounded-3xl overflow-hidden bg-apple-bg dark:bg-apple-darkCard border border-apple-border dark:border-apple-darkBorder cursor-pointer shadow-md" onclick="openLightbox('${block.image}')">
+                                <img src="${block.image}" alt="${block.title}" class="w-full h-auto object-cover">
+                            </div>
+                        </div>
+                    `;
+                } else if (layout === 'toolkit') {
+                    html += `
+                        <div class="py-12">
+                            <h3 class="text-xl font-semibold tracking-tight mb-8">${block.heading}</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                ${block.items.map(item => `
+                                    <div class="p-6 rounded-2xl bg-white dark:bg-apple-darkCard border border-apple-border dark:border-apple-darkBorder shadow-sm">
+                                        <h4 class="font-semibold mb-2">${item.title}</h4>
+                                        <p class="text-xs text-apple-subtext dark:text-apple-darkSubtext leading-relaxed">${item.desc}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                html += `</div>`;
+            });
+
+            html += `</div>`;
+            return html;
+        }
+
+        function openConfigModal(pageKey, blockIndex) {
+            activeConfig = { pageKey, blockIndex };
+            const block = pages[pageKey].blocks[blockIndex];
+            const content = document.getElementById('configFormContent');
+            
+            content.innerHTML = `
+                <div class="space-y-3">
+                    <label class="block font-medium text-apple-text dark:text-apple-darkText">Select Visual Display Layout Format:</label>
+                    <select id="layoutSelect" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-apple-border dark:border-apple-darkBorder font-medium">
+                        <option value="stacked_cards_showcase" ${block.layout === 'stacked_cards_showcase' || block.type === 'stacked_cards_showcase' ? 'selected' : ''}>3D Perspective Stacked Cards</option>
+                        <option value="bento" ${block.layout === 'bento' || block.type === 'bento' ? 'selected' : ''}>Asymmetric Bento Grid</option>
+                        <option value="hero" ${block.layout === 'hero' || block.type === 'hero' ? 'selected' : ''}>Cinematic Hero Banner</option>
+                        <option value="split_feature" ${block.layout === 'split_feature' || block.type === 'split_feature' ? 'selected' : ''}>Split Media & Text</option>
+                    </select>
+                </div>
+                <div class="space-y-3 pt-2">
+                    <label class="block font-medium text-apple-text dark:text-apple-darkText">Section Heading:</label>
+                    <input type="text" id="configHeading" value="${block.heading || block.title || ''}" class="w-full p-3 rounded-xl bg-apple-bg dark:bg-black/30 border border-apple-border dark:border-apple-darkBorder">
+                </div>
+            `;
+
+            const modal = document.getElementById('configModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeConfigModal() {
+            const modal = document.getElementById('configModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function saveBlockConfig() {
+            const { pageKey, blockIndex } = activeConfig;
+            const newLayout = document.getElementById('layoutSelect').value;
+            const newHeading = document.getElementById('configHeading').value;
+
+            pages[pageKey].blocks[blockIndex].layout = newLayout;
+            if (pages[pageKey].blocks[blockIndex].heading) {
+                pages[pageKey].blocks[blockIndex].heading = newHeading;
+            } else if (pages[pageKey].blocks[blockIndex].title) {
+                pages[pageKey].blocks[blockIndex].title = newHeading;
+            }
+
+            savePages();
+            closeConfigModal();
+            router();
+        }
+
+        function openLightbox(imgSrc) {
+            const modal = document.getElementById('lightboxModal');
+            document.getElementById('lightboxImg').src = imgSrc;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightboxModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const indicator = document.getElementById('editModeIndicator');
+            const dot = document.getElementById('editDot');
+            const text = document.getElementById('editText');
+            const dock = document.getElementById('studioDock');
+
+            if (isEditMode) {
+                indicator.classList.add('bg-apple-accent', 'text-white');
+                dot.classList.remove('bg-apple-subtext');
+                dot.classList.add('bg-white', 'animate-ping');
+                text.innerText = 'Exit Studio Mode';
+                dock.classList.remove('hidden');
+                dock.classList.add('flex');
+            } else {
+                indicator.classList.remove('bg-apple-accent', 'text-white');
+                dot.classList.add('bg-apple-subtext');
+                dot.classList.remove('bg-white', 'animate-ping');
+                text.innerText = 'Studio Mode';
+                dock.classList.remove('flex');
+                dock.classList.add('hidden');
+            }
+            router();
+        }
+
+        function enableEditing() {
+            document.querySelectorAll('h1, h2, h3, p').forEach(el => {
+                if (!el.closest('header')) {
+                    el.setAttribute('contenteditable', 'true');
+                    el.classList.add('editable-active');
+                }
+            });
+        }
+
+        function updatePageProp(pageKey, prop, val) {
+            pages[pageKey][prop] = val;
+            savePages();
+        }
+
+        function updateBlockProp(pageKey, blockIndex, prop, val) {
+            pages[pageKey].blocks[blockIndex][prop] = val;
+            savePages();
+        }
+
+        function savePages() {
+            localStorage.setItem('tk_creative_3d_pages', JSON.stringify(pages));
+        }
+
+        function moveBlock(pageKey, index, direction) {
+            const blocks = pages[pageKey].blocks;
+            const newIndex = index + direction;
+            if (newIndex >= 0 && newIndex < blocks.length) {
+                const temp = blocks[index];
+                blocks[index] = blocks[newIndex];
+                blocks[newIndex] = temp;
+                savePages();
+                router();
+            }
+        }
+
+        function deleteBlock(pageKey, index) {
+            if (confirm('Delete this section block?')) {
+                pages[pageKey].blocks.splice(index, 1);
+                savePages();
+                router();
+            }
+        }
+
+        function addBlockPrompt() {
+            const type = prompt("Enter block type (stacked_cards_showcase, hero, bento, split_feature):", "stacked_cards_showcase");
+            const hash = window.location.hash.slice(2) || 'home';
+            if (!pages[hash]) return;
+
+            let newBlock = {
+                type: type,
+                heading: 'New Showcase Section',
+                subheading: 'Visual Presentation',
+                cards: [
+                    { title: 'Project One', category: 'Branding', desc: 'Project description here...', link: '#/home', badge: 'New', image: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png' }
+                ]
+            };
+            pages[hash].blocks.push(newBlock);
+            savePages();
+            router();
+        }
+
+        function openSiteMap() {
+            const modal = document.getElementById('siteMapModal');
+            const list = document.getElementById('siteMapList');
+            list.innerHTML = '';
+
+            Object.keys(pages).forEach(key => {
+                list.innerHTML += `
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-apple-bg dark:bg-black/20 border border-apple-border dark:border-apple-darkBorder">
+                        <div>
+                            <h4 class="font-semibold text-sm">#/${key}</h4>
+                            <p class="text-xs text-apple-subtext dark:text-apple-darkSubtext">${pages[key].title}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <a href="#/${key}" onclick="closeSiteMap()" class="px-3 py-1.5 bg-white dark:bg-apple-darkCard rounded-xl text-xs font-medium border border-apple-border dark:border-apple-darkBorder">Visit</a>
+                            ${key !== 'home' ? `<button onclick="deletePage('${key}'); openSiteMap();" class="px-3 py-1.5 bg-red-500/10 text-red-500 rounded-xl text-xs font-medium">Delete</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeSiteMap() {
+            const modal = document.getElementById('siteMapModal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function createNewPagePrompt() {
+            const slug = prompt("Enter clean URL slug for new page (e.g. 'case-study-three'):");
+            if (!slug) return;
+            const cleanSlug = slug.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+            const title = prompt("Enter Page Title:", "New Creative Project");
+
+            pages[cleanSlug] = {
+                title: title + " — TK Creative",
+                subtitle: "Studio case study and project overview.",
+                blocks: [
+                    {
+                        type: 'editorial_header',
+                        client: 'Client Name',
+                        discipline: 'Brand Strategy & Design',
+                        year: '2026',
+                        title: title,
+                        summary: 'Overview and narrative summary of the creative engagement.'
+                    }
+                ]
+            };
+            savePages();
+            openSiteMap();
+        }
+
+        function deletePage(pageKey) {
+            if (pageKey === 'home') {
+                alert("Cannot delete the homepage.");
+                return;
+            }
+            if (confirm(`Are you sure you want to delete page #/${pageKey}?`)) {
+                delete pages[pageKey];
+                savePages();
+                window.location.hash = '#/home';
+                router();
+            }
+        }
+
+        function exportHTML() {
+            let htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index_3D.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
