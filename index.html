@@ -1,0 +1,2973 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TK Creative — Playfulness Through Elegance &amp; Rhythm</title>
+  <style>
+    :root {
+      --accent: #0071E3;
+      --accent-hover: #0077ED;
+      --accent-soft: rgba(0, 113, 227, 0.10);
+      --accent-border: rgba(0, 113, 227, 0.28);
+
+      --bg: #FFFFFF;
+      --surface: #F5F5F7;
+      --elevated: #FFFFFF;
+      --ink: #1D1D1F;
+      --muted: #6E6E73;
+      --border: rgba(0, 0, 0, 0.08);
+      --glass: rgba(255, 255, 255, 0.78);
+      --shadow-card: 0 20px 50px -18px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 28px 64px -16px rgba(0, 0, 0, 0.14);
+    }
+
+    html.dark {
+      --bg: #000000;
+      --surface: #111113;
+      --elevated: #1D1D1F;
+      --ink: #F5F5F7;
+      --muted: #86868B;
+      --border: rgba(255, 255, 255, 0.10);
+      --glass: rgba(17, 17, 19, 0.78);
+      --shadow-card: 0 24px 56px -18px rgba(0, 0, 0, 0.65);
+      --shadow-hover: 0 32px 72px -16px rgba(0, 0, 0, 0.85);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--ink);
+      font-feature-settings: "kern" 1, "liga" 1, "cv02" 1, "cv03" 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    /* Typography */
+    .display-xl {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .display-lg {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.9rem, 3.8vw, 3rem);
+      line-height: 1.09;
+      letter-spacing: -0.028em;
+    }
+
+    .display-md {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+      line-height: 1.18;
+      letter-spacing: -0.022em;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--accent);
+      display: inline-block;
+    }
+
+    .eyebrow-caps {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Layout Containers */
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .container-editorial {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Sticky 52px Apple Frosted Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      height: 52px;
+      background: var(--glass);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--bg);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      transition: transform 0.25s ease;
+    }
+
+    .brand-link:hover .brand-mark {
+      transform: scale(1.07);
+    }
+
+    .desktop-nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-link {
+      font-size: 12.5px;
+      color: var(--muted);
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pill-btn:hover {
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    .pill-btn-solid {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 5px 13px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .pill-btn-solid:hover {
+      opacity: 0.85;
+    }
+
+    .count-badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      color: var(--muted);
+    }
+
+    .mobile-drawer {
+      display: none;
+      background: var(--glass);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px 20px;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mobile-drawer.open {
+      display: flex;
+    }
+
+    /* Main Canvas & Breathing Room */
+    main {
+      flex: 1;
+      width: 100%;
+    }
+
+    .breadcrumb-wrap {
+      padding-top: 24px;
+    }
+
+    .breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    #blocks-container {
+      padding-top: 56px;
+      padding-bottom: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 100px;
+    }
+
+    @keyframes pageReveal {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.995);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .page-reveal {
+      animation: pageReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Buttons & Links */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.25s ease, background-color 0.2s ease, box-shadow 0.25s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px -8px var(--accent);
+    }
+
+    .link-chevron {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--accent);
+      cursor: pointer;
+      transition: gap 0.2s ease;
+    }
+
+    .link-chevron:hover {
+      text-decoration: underline;
+      gap: 7px;
+    }
+
+    /* Media Frames & Lightbox Trigger */
+    .media-frame {
+      position: relative;
+      border-radius: 26px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-card);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .media-frame:hover {
+      transform: scale(1.008);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .media-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      cursor: zoom-in;
+    }
+
+    .zoom-hint {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(29, 29, 31, 0.72);
+      backdrop-filter: blur(12px);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .media-frame:hover .zoom-hint {
+      opacity: 1;
+    }
+
+    /* ==================== HOMEPAGE LAYOUT COMPONENTS ==================== */
+    .hero-block {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 44px;
+    }
+
+    .hero-copy {
+      max-width: 820px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      color: var(--muted);
+      max-width: 680px;
+      line-height: 1.55;
+      font-weight: 400;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      margin-top: 8px;
+    }
+
+    .hero-visual {
+      width: 100%;
+    }
+
+    .hero-caption {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    .bento-header {
+      max-width: 680px;
+      margin-bottom: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .bento-card {
+      border-radius: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      overflow: hidden;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .bento-card:hover {
+      transform: scale(1.012);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .bento-card.wide {
+      grid-column: span 7;
+    }
+
+    .bento-card.standard {
+      grid-column: span 5;
+    }
+
+    .bento-card.dark-card {
+      background: #111113;
+      color: #F5F5F7;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .bento-card.dark-card .bento-desc {
+      color: #A1A1A6;
+    }
+
+    .bento-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 460px;
+    }
+
+    .bento-img-wrap {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      aspect-ratio: 16 / 10;
+      background: var(--elevated);
+    }
+
+    .bento-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ==================== SUBPAGE CASE STUDY LAYOUT COMPONENTS ==================== */
+    .case-header-block {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .metadata-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .meta-badge strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .editorial-narrative {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .editorial-narrative p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .editorial-narrative p.lead-p {
+      font-size: 1.35rem;
+      color: var(--ink);
+      font-weight: 500;
+      letter-spacing: -0.015em;
+    }
+
+    .split-editorial {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .split-editorial-text {
+      grid-column: span 5;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .split-editorial-media {
+      grid-column: span 7;
+    }
+
+    .split-editorial.reverse .split-editorial-text {
+      order: 2;
+    }
+
+    .split-editorial.reverse .split-editorial-media {
+      order: 1;
+    }
+
+    /* Dual Theme Comparison Module */
+    .dual-themes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .theme-card {
+      border-radius: 32px;
+      padding: 44px 36px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .theme-mallorca {
+      background: linear-gradient(145deg, rgba(255, 183, 77, 0.16) 0%, rgba(255, 107, 107, 0.08) 60%, var(--surface) 100%);
+    }
+
+    .theme-alps {
+      background: linear-gradient(145deg, rgba(0, 113, 227, 0.16) 0%, rgba(94, 92, 230, 0.08) 60%, var(--surface) 100%);
+    }
+
+    /* Gallery Spreads */
+    .gallery-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .gallery-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    /* Principles Grid */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .principle-card {
+      border-radius: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Metrics Strip */
+    .metrics-strip {
+      border-radius: 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 48px 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .metric-item {
+      padding: 0 20px;
+      border-left: 1px solid var(--border);
+    }
+
+    .metric-item:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+
+    .metric-val {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+
+    .metric-lbl {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* Manifesto Statement */
+    .manifesto-block {
+      max-width: 880px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .manifesto-text {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.85rem, 3.6vw, 2.9rem);
+      line-height: 1.14;
+      letter-spacing: -0.03em;
+    }
+
+    .manifesto-muted {
+      color: var(--muted);
+    }
+
+    /* Toolkit 3-Column Grid */
+    .toolkit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .toolkit-card {
+      border-radius: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .toolkit-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toolkit-list li {
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.45;
+    }
+
+    .toolkit-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    /* Next Project / CTA Banner */
+    .next-banner {
+      border-radius: 36px;
+      background: #111113;
+      color: #F5F5F7;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 56px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .next-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(90% 90% at 85% 15%, rgba(0, 113, 227, 0.28), transparent 70%);
+      pointer-events: none;
+    }
+
+    .next-banner-copy {
+      grid-column: span 7;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .next-banner-media {
+      grid-column: span 5;
+      position: relative;
+      z-index: 1;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .next-banner-media img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .cta-center-banner {
+      border-radius: 36px;
+      background: #111113;
+      color: #F5F5F7;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 72px 36px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-center-banner::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(80% 80% at 50% 0%, rgba(0, 113, 227, 0.3), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 48px 0;
+      margin-top: auto;
+    }
+
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--ink);
+    }
+
+    .footer-bottom {
+      padding-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+
+    /* ==================== STUDIO EDIT MODE & FLOATING DOCK ==================== */
+    .cms-editing [contenteditable="true"] {
+      outline: 1.5px dashed var(--accent);
+      outline-offset: 4px;
+      border-radius: 6px;
+      cursor: text;
+      transition: background-color 0.2s ease;
+    }
+
+    .cms-editing [contenteditable="true"]:focus,
+    .cms-editing [contenteditable="true"]:hover {
+      outline: 2px solid var(--accent);
+      background-color: var(--accent-soft);
+    }
+
+    .block-toolbar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .cms-editing .block-toolbar {
+      display: flex;
+    }
+
+    .mini-edit-btn {
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+      cursor: pointer;
+    }
+
+    .mini-edit-btn:hover {
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+
+    .add-section-box {
+      display: none;
+      max-width: 900px;
+      margin: 0 auto 120px;
+      padding: 32px;
+      border-radius: 28px;
+      border: 1.5px dashed var(--border);
+      background: var(--surface);
+      text-align: center;
+    }
+
+    .cms-editing .add-section-box {
+      display: block;
+    }
+
+    .add-section-btns {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .studio-dock {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(29, 29, 31, 0.90);
+      backdrop-filter: saturate(180%) blur(24px);
+      -webkit-backdrop-filter: saturate(180%) blur(24px);
+      color: #FFFFFF;
+      box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.14);
+      max-width: 95vw;
+      font-size: 12px;
+    }
+
+    .cms-editing .studio-dock {
+      display: flex;
+    }
+
+    .dock-select {
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .dock-select option {
+      color: #1D1D1F;
+      background: #FFFFFF;
+    }
+
+    .dock-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.88);
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s ease;
+    }
+
+    .dock-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+    }
+
+    .dock-btn-accent {
+      background: var(--accent);
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+
+    .dock-btn-accent:hover {
+      background: var(--accent-hover);
+    }
+
+    .dock-btn-done {
+      background: #FFFFFF;
+      color: #1D1D1F;
+      font-weight: 600;
+    }
+
+    .swatch-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 6px;
+    }
+
+    .swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .swatch:hover {
+      transform: scale(1.25);
+    }
+
+    .export-popover {
+      position: absolute;
+      bottom: 52px;
+      right: 60px;
+      width: 250px;
+      background: #1D1D1F;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+    }
+
+    .export-popover.open {
+      display: flex;
+    }
+
+    .export-item {
+      text-align: left;
+      padding: 12px 16px;
+      background: none;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+      cursor: pointer;
+      display: block;
+    }
+
+    .export-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    /* Modals & Lightbox */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--elevated);
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      width: 100%;
+      max-width: 480px;
+      padding: 28px;
+      box-shadow: 0 32px 72px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-height: 88vh;
+      overflow-y: auto;
+    }
+
+    .modal-card.wide {
+      max-width: 760px;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .close-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: none;
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .field-input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .field-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* Lightbox */
+    .lightbox-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(16px);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox-backdrop.open {
+      display: flex;
+    }
+
+    .lightbox-backdrop img {
+      max-width: 92vw;
+      max-height: 80vh;
+      border-radius: 20px;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.8);
+    }
+
+    .lightbox-caption {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 13px;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    /* Toast */
+    .toast-wrap {
+      position: fixed;
+      top: 66px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 80;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .toast-pill {
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: #1D1D1F;
+      color: #FFFFFF;
+      font-size: 12px;
+      font-weight: 500;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .bento-card.wide, .bento-card.standard,
+      .split-editorial,
+      .next-banner-copy, .next-banner-media {
+        grid-column: span 12;
+      }
+      .split-editorial.reverse .split-editorial-text { order: 1; }
+      .split-editorial.reverse .split-editorial-media { order: 2; }
+      .dual-themes-grid, .gallery-grid-3, .principles-grid, .toolkit-grid, .metrics-strip {
+        grid-template-columns: 1fr;
+      }
+      .metric-item {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding: 16px 0 0;
+      }
+      .metric-item:first-child {
+        border-top: none;
+        padding-top: 0;
+      }
+      .next-banner {
+        padding: 36px 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .desktop-nav, .swatch-row {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+      #blocks-container {
+        gap: 80px;
+        padding-top: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 52px Frosted Glass Global Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#/home" onclick="navigate('home'); return false;" class="brand-link">
+        <span class="brand-mark" id="brand-initials">TK</span>
+        <span id="brand-title">TK Creative</span>
+      </a>
+
+      <nav class="desktop-nav" id="desktop-nav"></nav>
+
+      <div class="header-actions">
+        <button class="pill-btn" onclick="openSiteMapModal()" title="Site Map & Interconnected Pages">
+          <span>Site Map</span>
+          <span class="count-badge" id="page-count-badge">6</span>
+        </button>
+
+        <button class="pill-btn" onclick="toggleTheme()" title="Toggle Light / Dark Mode" id="theme-toggle-btn">
+          ◐
+        </button>
+
+        <button class="pill-btn-solid" onclick="toggleEditMode()" id="edit-mode-btn" title="Toggle Studio Edit Mode (Cmd/Ctrl+E)">
+          Edit Site
+        </button>
+
+        <button class="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="Menu">
+          ☰
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-drawer" id="mobile-drawer"></div>
+  </header>
+
+  <!-- Main Content Canvas -->
+  <main>
+    <div class="container breadcrumb-wrap" id="breadcrumb-wrap" style="display:none;">
+      <div class="breadcrumb" id="breadcrumb-bar"></div>
+    </div>
+
+    <div id="blocks-container"></div>
+
+    <!-- Add Section Box (Visible in Edit Mode) -->
+    <div class="container">
+      <div class="add-section-box">
+        <span class="eyebrow-caps">Insert Modular Section</span>
+        <div class="add-section-btns">
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('hero')">+ Hero Stage</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('bento')">+ Bento Grid</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('case_header')">+ Cinematic Case Header</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('editorial_split')">+ Editorial Split</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('dual_themes')">+ Dual Theme Spread</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('principles')">+ Principles Grid</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('gallery')">+ Staggered Gallery</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('metrics')">+ Metrics Strip</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('manifesto')">+ Manifesto</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('toolkit')">+ Toolkit Grid</button>
+          <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="addBlock('next')">+ Next Project Banner</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Minimalist Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <strong style="font-size:14px;" id="footer-brand">TK Creative</strong>
+          <p style="font-size:12.5px;color:var(--muted);margin-top:4px;">
+            Brand systems, editorial storytelling, and visual experiences crafted with clarity and restraint.
+          </p>
+        </div>
+        <div class="footer-links" id="footer-links"></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TK Creative Studio. All rights reserved.</span>
+        <span>Zero-dependency modular micro-CMS architecture.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Studio Inspector Dock (Edit Mode) -->
+  <div class="studio-dock" id="studio-dock">
+    <select class="dock-select" id="dock-page-select" onchange="navigate(this.value)"></select>
+    <button class="dock-btn dock-btn-accent" onclick="openNewPageModal()">+ Page</button>
+    <button class="dock-btn" onclick="openSiteMapModal()">Site Map</button>
+    <button class="dock-btn" onclick="openPageSettingsModal()">Settings</button>
+
+    <div class="swatch-row">
+      <button class="swatch" style="background:#0071E3;" onclick="setAccent('#0071E3')" title="Apple Blue"></button>
+      <button class="swatch" style="background:#D4AF37;" onclick="setAccent('#D4AF37')" title="Champagne Gold"></button>
+      <button class="swatch" style="background:#30D158;" onclick="setAccent('#30D158')" title="Emerald"></button>
+      <button class="swatch" style="background:#BF5AF2;" onclick="setAccent('#BF5AF2')" title="Studio Violet"></button>
+      <button class="swatch" style="background:#FF375F;" onclick="setAccent('#FF375F')" title="Crimson"></button>
+    </div>
+
+    <div style="position:relative;">
+      <button class="dock-btn" onclick="toggleExportPopover()">Export</button>
+      <div class="export-popover" id="export-popover">
+        <button class="export-item" onclick="exportStandaloneHTML(); toggleExportPopover();">
+          <div style="font-weight:600;font-size:12px;">Export Standalone HTML</div>
+          <div style="font-size:11px;color:#A1A1A6;">Stripped production build (zero CMS)</div>
+        </button>
+        <button class="export-item" onclick="exportJSON(); toggleExportPopover();">
+          <div style="font-weight:600;font-size:12px;">Download CMS JSON</div>
+          <div style="font-size:11px;color:#A1A1A6;">Full multi-page site backup</div>
+        </button>
+        <label class="export-item">
+          <div style="font-weight:600;font-size:12px;">Import CMS JSON</div>
+          <div style="font-size:11px;color:#A1A1A6;">Load site data from file</div>
+          <input type="file" accept=".json" style="display:none;" onchange="importJSON(event); toggleExportPopover();" />
+        </label>
+        <button class="export-item" style="color:#FF6961;border-bottom:none;" onclick="resetDemoSite(); toggleExportPopover();">
+          <div style="font-weight:600;font-size:12px;">Reset Studio Defaults</div>
+        </button>
+      </div>
+    </div>
+
+    <button class="dock-btn dock-btn-done" onclick="toggleEditMode()">Done</button>
+  </div>
+
+  <!-- Modal 1: Link / Image Inspector Modal -->
+  <div class="modal-backdrop" id="link-modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">Interconnected Page &amp; Media</span>
+          <h3 class="display-md" style="margin-top:4px;" id="link-modal-title">Configure Link</h3>
+        </div>
+        <button class="close-circle" onclick="closeModal('link-modal')">✕</button>
+      </div>
+
+      <div id="link-label-group">
+        <label class="field-label">Button / Link Label</label>
+        <input type="text" class="field-input" id="link-label-input" placeholder="e.g., Explore Case Study" />
+      </div>
+
+      <div id="link-target-group">
+        <label class="field-label">Destination Page</label>
+        <select class="field-input" id="link-target-select" onchange="onLinkTargetChange(this.value)"></select>
+      </div>
+
+      <div id="ondemand-page-box" style="display:none;padding:14px;border-radius:16px;background:var(--accent-soft);border:1px solid var(--accent-border);">
+        <label class="field-label" style="color:var(--accent);">New Subpage Title (Generated On-Demand)</label>
+        <input type="text" class="field-input" id="ondemand-title-input" placeholder="e.g., Brand Identity System" />
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-top:10px;cursor:pointer;">
+          <input type="checkbox" id="ondemand-nav-check" />
+          <span>Show in top navigation bar</span>
+        </label>
+      </div>
+
+      <div id="image-url-group" style="display:none;">
+        <label class="field-label">Image URL</label>
+        <input type="text" class="field-input" id="image-url-input" placeholder="https://..." />
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px;">
+        <button class="pill-btn" onclick="closeModal('link-modal')">Cancel</button>
+        <button class="btn-primary" style="padding:8px 18px;font-size:13px;" onclick="saveLinkModal()">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Create New Page On-Demand -->
+  <div class="modal-backdrop" id="new-page-modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">On-Demand Architecture</span>
+          <h3 class="display-md" style="margin-top:4px;">Create New Subpage</h3>
+        </div>
+        <button class="close-circle" onclick="closeModal('new-page-modal')">✕</button>
+      </div>
+
+      <div>
+        <label class="field-label">Page Title</label>
+        <input type="text" class="field-input" id="new-page-title" placeholder="e.g., Spatial Brand Guidelines" />
+      </div>
+
+      <div>
+        <label class="field-label">Editorial Blueprint</label>
+        <select class="field-input" id="new-page-template">
+          <option value="case-study">Flagship Case Study (Hero + Editorial + Spreads)</option>
+          <option value="editorial">Editorial Manifesto (Hero + Statement)</option>
+          <option value="blank">Minimalist Canvas (Hero Only)</option>
+        </select>
+      </div>
+
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;">
+        <input type="checkbox" id="new-page-in-nav" checked />
+        <span>Include in global top navigation bar</span>
+      </label>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button class="pill-btn" onclick="closeModal('new-page-modal')">Cancel</button>
+        <button class="btn-primary" style="padding:8px 18px;font-size:13px;" onclick="createPageFromModal()">Create Page</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Page & Brand Settings -->
+  <div class="modal-backdrop" id="settings-modal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">Studio Configuration</span>
+          <h3 class="display-md" style="margin-top:4px;">Page &amp; Brand Settings</h3>
+        </div>
+        <button class="close-circle" onclick="closeModal('settings-modal')">✕</button>
+      </div>
+
+      <div>
+        <label class="field-label">Studio Wordmark</label>
+        <input type="text" class="field-input" id="settings-brand" />
+      </div>
+
+      <div>
+        <label class="field-label">Current Page Title</label>
+        <input type="text" class="field-input" id="settings-page-title" />
+      </div>
+
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);cursor:pointer;">
+        <input type="checkbox" id="settings-in-nav" />
+        <span>Show current page in top navigation bar</span>
+      </label>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border);">
+        <button id="delete-page-btn" onclick="deleteCurrentPage()" style="background:none;border:none;color:#FF3B30;font-size:12.5px;font-weight:600;cursor:pointer;">Delete Page</button>
+        <div style="display:flex;gap:10px;">
+          <button class="pill-btn" onclick="closeModal('settings-modal')">Cancel</button>
+          <button class="btn-primary" style="padding:8px 18px;font-size:13px;" onclick="saveSettingsModal()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Visual Site Map -->
+  <div class="modal-backdrop" id="sitemap-modal">
+    <div class="modal-card wide">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">Live Page Graph</span>
+          <h3 class="display-md" style="margin-top:4px;">Site Architecture &amp; Interconnected Pages</h3>
+        </div>
+        <button class="close-circle" onclick="closeModal('sitemap-modal')">✕</button>
+      </div>
+
+      <div id="sitemap-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--border);">
+        <span style="font-size:12px;color:var(--muted);">Instant client-side hash routing with zero page reloads.</span>
+        <button class="btn-primary" style="padding:8px 16px;font-size:12.5px;" onclick="closeModal('sitemap-modal'); openNewPageModal();">+ New Subpage</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Click-to-Zoom Lightbox -->
+  <div class="lightbox-backdrop" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Slide Preview" onclick="event.stopPropagation()" />
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-wrap" id="toast-wrap"></div>
+
+  <script>
+    const STORAGE_KEY = 'tk_creative_luxury_cms_v5';
+
+    // All 14 original Speexx Mallorca slide images + Ultimate.ai
+    const IMG = {
+      speexx2: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/aaa285f5817a4df4a939501fbb2ae240/original/Speexx-Mallorca2.png',
+      speexx3: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/f9c12609b4784a7a9973e2de6fce4a36/original/Speexx-Mallorca3.png',
+      speexx4: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/4e7f7c9e91954672b3e5d77f3961c85d/original/Speexx-Mallorca4.png',
+      speexx5: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/4c425f84e3d445d4b6a468c834f67172/original/Speexx-Mallorca5.png',
+      speexx6: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/5f8a2b1c9e7d4310a8b2c4d6e8f0a1b2/original/Speexx-Mallorca6.png',
+      speexx7: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/7b9c4d2e1f3a4856b7c8d9e0f1a2b3c4/original/Speexx-Mallorca7.png',
+      speexx8: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/8c0d2e4f6a8b4901c2d3e4f5a6b7c8d9/original/Speexx-Mallorca8.png',
+      speexx9: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/9d1e3f5a7b9c4012d3e4f5a6b7c8d9e0/original/Speexx-Mallorca9.png',
+      speexx13: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/13a4b5c6d7e84901a2b3c4d5e6f7a8b9/original/Speexx-Mallorca13.png',
+      speexx16: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/16d7e8f9a0b14234c5d6e7f8a9b0c1d2/original/Speexx-Mallorca16.png',
+      speexx17: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/17e8f9a0b1c24345d6e7f8a9b0c1d2e3/original/Speexx-Mallorca17.png',
+      speexx19: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/19a0b1c2d3e44567f8a9b0c1d2e3f4a5/original/Speexx-Mallorca19.png',
+      speexx20: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/20b1c2d3e4f54678a9b0c1d2e3f4a5b6/original/Speexx-Mallorca20.png',
+      speexx22: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/22d3e4f5a6b74890c1d2e3f4a5b6c7d8/original/Speexx-Mallorca22.png',
+      ultimate: 'https://imgproxy.gamma.app/resize/quality:80/resizing_type:fit/width:2000/https://cdn.gamma.app/k2xy4zz7vjv6af1/035267cb2db84d6c93eca73870b59198/original/Portfolio-202590.jpg'
+    };
+
+    const TOOLKIT_COLUMNS = [
+      {
+        title: 'Design Expertise',
+        items: [
+          'Event Branding & Identity Systems',
+          'Geometric Abstraction & Visual Grammar',
+          'Color & Atmospheric Gradient Architecture',
+          'Editorial Layout & Negative Space Rhythm'
+        ]
+      },
+      {
+        title: 'Visual Storytelling',
+        items: [
+          'Executive Keynote & Stage Visuals',
+          'Multi-Destination Narrative Frameworks',
+          'Print & Environmental Touchpoint Design',
+          'Motion & Slide Transition Choreography'
+        ]
+      },
+      {
+        title: 'Project Leadership',
+        items: [
+          'Senior Management Pitch & Alignment',
+          'Cross-Functional Creative Direction',
+          'Scalable Multi-Year Design Toolkits',
+          'End-to-End Production Governance'
+        ]
+      }
+    ];
+
+    const DEFAULT_SITE_DATA = {
+      brandName: 'TK Creative',
+      accentColor: '#0071E3',
+      theme: 'light',
+      pages: {
+        'home': {
+          slug: 'home',
+          title: 'Home',
+          inNav: true,
+          parentSlug: null,
+          containerClass: 'container',
+          blocks: [
+            {
+              id: 'h-hero',
+              type: 'hero',
+              eyebrow: 'TK Creative Studio',
+              title: 'Playfulness through elegance and rhythm.',
+              subtitle: 'Brand systems, editorial storytelling, and visual experiences crafted with clarity and restraint.',
+              ctaLabel: 'Explore Speexx Case Study',
+              ctaTarget: 'speexx-annual-kick-off-visual',
+              secondaryLabel: 'Selected Work',
+              secondaryTarget: 'work',
+              image: IMG.speexx3,
+              imageCaption: 'Featured Exhibition — Speexx Annual Kick-off Event Visual System'
+            },
+            {
+              id: 'h-bento',
+              type: 'bento',
+              eyebrow: 'Featured Work',
+              title: 'Visual systems shaped by narrative and restraint.',
+              cards: [
+                {
+                  span: 'wide',
+                  dark: true,
+                  eyebrow: 'Event Branding & Visual System',
+                  title: 'Speexx Annual Kick-off Visual',
+                  description: 'Abstracting the Alps and Mallorca into an expandable geometric language of horizon lines, peaks, and quiet gradients.',
+                  linkLabel: 'Explore Speexx Case Study',
+                  linkTarget: 'speexx-annual-kick-off-visual',
+                  image: IMG.speexx3
+                },
+                {
+                  span: 'standard',
+                  dark: false,
+                  eyebrow: 'Editorial & Research Report',
+                  title: 'Ultimate.ai Trend Report 2021',
+                  description: 'Navigating omnichannel trends in customer service through structured data storytelling.',
+                  linkLabel: 'View Case Study',
+                  linkTarget: 'ultimateai-customer-service-trend-report-2021',
+                  image: IMG.ultimate
+                },
+                {
+                  span: 'standard',
+                  dark: false,
+                  eyebrow: 'Studio Practice',
+                  title: 'Brand Architecture & Systems',
+                  description: 'Modular identity frameworks designed to scale effortlessly across executive stages and digital touchpoints.',
+                  linkLabel: 'Explore Studio',
+                  linkTarget: 'studio',
+                  image: IMG.speexx2
+                },
+                {
+                  span: 'wide',
+                  dark: false,
+                  eyebrow: 'Complete Archive',
+                  title: 'Selected Brand & Editorial Projects',
+                  description: 'Browse our curated collection of brand transformations, executive presentations, and visual identity journeys.',
+                  linkLabel: 'Open Selected Work',
+                  linkTarget: 'work',
+                  image: IMG.speexx22
+                }
+              ]
+            },
+            {
+              id: 'h-manifesto',
+              type: 'manifesto',
+              eyebrow: 'Creative Philosophy',
+              lead: 'Clarity creates resonance.',
+              body: 'By distilling complex brand narratives into pure geometric rhythm and generous negative space, every touchpoint invites effortless engagement.'
+            },
+            {
+              id: 'h-toolkit',
+              type: 'toolkit',
+              eyebrow: 'Studio Capabilities',
+              title: 'Professional Toolkit',
+              columns: TOOLKIT_COLUMNS
+            },
+            {
+              id: 'h-cta',
+              type: 'cta',
+              eyebrow: 'Collaborate',
+              title: 'Ready to shape your next visual narrative?',
+              subtitle: 'Let’s discuss upcoming brand launches, executive keynotes, and identity systems.',
+              ctaLabel: 'Start a Conversation',
+              ctaTarget: 'contact'
+            }
+          ]
+        },
+
+        'work': {
+          slug: 'work',
+          title: 'Work',
+          inNav: true,
+          parentSlug: null,
+          containerClass: 'container',
+          blocks: [
+            {
+              id: 'w-hero',
+              type: 'hero',
+              eyebrow: 'Selected Work',
+              title: 'Brand systems, reports, and visual journeys.',
+              subtitle: 'Select any engagement below to inspect the full creative process, visual spreads, and strategic framework.',
+              ctaLabel: 'Speexx Kick-off Visual',
+              ctaTarget: 'speexx-annual-kick-off-visual',
+              secondaryLabel: 'Ultimate.ai Report',
+              secondaryTarget: 'ultimateai-customer-service-trend-report-2021',
+              image: '',
+              imageCaption: ''
+            },
+            {
+              id: 'w-bento',
+              type: 'bento',
+              eyebrow: 'Case Studies',
+              title: 'Featured engagements.',
+              cards: [
+                {
+                  span: 'wide',
+                  dark: true,
+                  eyebrow: 'Event Branding • Speexx',
+                  title: 'Speexx Annual Kick-off Visual',
+                  description: 'Playfulness through elegance and rhythm: abstracting Mallorca and the Alps into an expandable geometric event identity.',
+                  linkLabel: 'Open Speexx Case Study',
+                  linkTarget: 'speexx-annual-kick-off-visual',
+                  image: IMG.speexx3
+                },
+                {
+                  span: 'standard',
+                  dark: false,
+                  eyebrow: 'Publication • Ultimate.ai',
+                  title: 'Ultimate.ai Trend Report 2021',
+                  description: 'Navigating omnichannel trends in customer service with bold editorial hierarchy.',
+                  linkLabel: 'Open Ultimate.ai Case Study',
+                  linkTarget: 'ultimateai-customer-service-trend-report-2021',
+                  image: IMG.ultimate
+                }
+              ]
+            },
+            {
+              id: 'w-cta',
+              type: 'cta',
+              eyebrow: 'New Commissions',
+              title: 'Have a flagship project in mind?',
+              subtitle: 'Reach out directly to explore availability for upcoming quarters.',
+              ctaLabel: 'Contact TK Creative',
+              ctaTarget: 'contact'
+            }
+          ]
+        },
+
+        'speexx-annual-kick-off-visual': {
+          slug: 'speexx-annual-kick-off-visual',
+          title: 'Speexx Case Study',
+          inNav: true,
+          parentSlug: 'work',
+          containerClass: 'container-editorial',
+          blocks: [
+            {
+              id: 'sp-header',
+              type: 'case_header',
+              eyebrow: 'Case Study • Event Branding & Visual System',
+              title: 'Playfulness through elegance and rhythm: Speexx annual kick-off event branding journey',
+              client: 'Speexx',
+              discipline: 'Event Branding & Visual System',
+              year: '2025',
+              leadText: 'A well organised event boosts employee engagement and contribution to the company. At Speexx, we take this principle very seriously, also including how much efforts we spend on the event branding so the team feels they are well respected and treated.',
+              image: IMG.speexx3,
+              imageCaption: 'Speexx Annual Kick-off — Primary Event Visual Identity Stage Spread (Mallorca3)'
+            },
+            {
+              id: 'sp-split-1',
+              type: 'editorial_split',
+              reverse: false,
+              eyebrow: 'Geometric Grammar',
+              title: 'Simple, simple, simple',
+              body: 'The visual system cleverly abstracts land (Alps) and sea (Mallorca) into simple geometric languages—lines for the horizon/ocean and triangles for peaks.',
+              image: IMG.speexx2,
+              imageCaption: 'Horizon lines & mountain peaks geometric abstraction (Mallorca2)'
+            },
+            {
+              id: 'sp-themes',
+              type: 'dual_themes',
+              eyebrow: 'Dual Destination Expression',
+              title: 'Two landscapes, one cohesive rhythm.',
+              mallorcaTitle: 'Mallorca — Sunlit Horizon & Sea',
+              mallorcaBody: 'Warm Mediterranean gradients and rhythmic horizontal wave lines evoke coastal openness, celebration, and shared momentum.',
+              alpsTitle: 'Alps — Crisp Altitude & Peaks',
+              alpsBody: 'Cool alpine atmosphere paired with sharp triangular geometry captures focus, clarity, and collective ambition.',
+              slides: [
+                { src: IMG.speexx4, caption: 'Slide 04 — Mallorca Horizon & Warm Gradient Study' },
+                { src: IMG.speexx5, caption: 'Slide 05 — Keynote Title & Rhythm System' },
+                { src: IMG.speexx6, caption: 'Slide 06 — Environmental & Stage Application' },
+                { src: IMG.speexx7, caption: 'Slide 07 — Alps Triangular Peak Geometry' },
+                { src: IMG.speexx8, caption: 'Slide 08 — Cool Gradient & Typographic Balance' },
+                { src: IMG.speexx9, caption: 'Slide 09 — Presentation System Spread' }
+              ]
+            },
+            {
+              id: 'sp-split-2',
+              type: 'editorial_split',
+              reverse: true,
+              eyebrow: 'Scalable Framework',
+              title: 'Abstract and simplicity',
+              body: 'This abstraction makes the framework expandable: future events can adopt new shapes or patterns based on local character while maintaining visual consistency.',
+              image: IMG.speexx13,
+              imageCaption: 'Slide 13 — Modular system architecture built for future global gatherings'
+            },
+            {
+              id: 'sp-principles',
+              type: 'principles',
+              eyebrow: 'Design Principles & Composition',
+              title: 'Restraint that lets the message breathe.',
+              principles: [
+                {
+                  title: 'Big fields of negative space',
+                  description: 'Generous open canvas gives executive keynotes immediate visual calm and effortless legibility from every seat.'
+                },
+                {
+                  title: 'Geometric line work',
+                  description: 'Clean vectors establish directional flow and rhythmic structure without visual clutter.'
+                },
+                {
+                  title: 'Strong yet quiet gradients',
+                  description: 'Smooth atmospheric color transitions evoke sky, sea, and altitude while keeping typography razor-sharp.'
+                }
+              ],
+              slides: [
+                { src: IMG.speexx16, caption: 'Slide 16 — Composition Study 01 (Negative Space & Horizon)' },
+                { src: IMG.speexx17, caption: 'Slide 17 — Composition Study 02 (Rhythmic Line Progression)' },
+                { src: IMG.speexx19, caption: 'Slide 19 — Composition Study 03 (Atmospheric Gradient Field)' },
+                { src: IMG.speexx20, caption: 'Slide 20 — Composition Study 04 (Speaker & Agenda Layout)' }
+              ]
+            },
+            {
+              id: 'sp-split-3',
+              type: 'editorial_split',
+              reverse: false,
+              eyebrow: 'Closing Narrative',
+              title: 'The perfect balance',
+              body: 'This visual journey takes the senior management through an exploration of brand, visual experience, and an adventure. The result is a visual language that is not only beautiful but also deeply engaging. It invites employees into a shared narrative—one shaped by the landscapes we gather in and the optimism of new beginnings.',
+              image: IMG.speexx22,
+              imageCaption: 'Slide 22 — Final Keynote Synthesis & New Beginnings'
+            },
+            {
+              id: 'sp-next',
+              type: 'next',
+              eyebrow: 'Explore more brand-transforming projects',
+              title: 'Ultimate.ai navigates through the omnichannel trends in customer service',
+              subtitle: 'Discover how editorial structure and bold data visualization turned complex AI customer service insights into an engaging executive report.',
+              ctaLabel: 'Explore Ultimate.ai Case Study',
+              ctaTarget: 'ultimateai-customer-service-trend-report-2021',
+              image: IMG.ultimate
+            }
+          ]
+        },
+
+        'ultimateai-customer-service-trend-report-2021': {
+          slug: 'ultimateai-customer-service-trend-report-2021',
+          title: 'Ultimate.ai Report',
+          inNav: false,
+          parentSlug: 'work',
+          containerClass: 'container-editorial',
+          blocks: [
+            {
+              id: 'ul-header',
+              type: 'case_header',
+              eyebrow: 'Case Study • Editorial & Research Publication',
+              title: 'Ultimate.ai navigates through the omnichannel trends in customer service',
+              client: 'Ultimate.ai',
+              discipline: 'Editorial Research Publication & Data UI',
+              year: '2021',
+              leadText: 'Translating global customer support automation benchmarks into a clear, high-impact digital publication for enterprise CX leaders.',
+              image: IMG.ultimate,
+              imageCaption: 'Ultimate.ai Customer Service Trend Report — Cover & Editorial System'
+            },
+            {
+              id: 'ul-metrics',
+              type: 'metrics',
+              items: [
+                { value: '12+', label: 'Omnichannel Benchmark Chapters' },
+                { value: '3.4×', label: 'Enterprise Report Downloads' },
+                { value: '100%', label: 'Custom Data Visualization System' }
+              ]
+            },
+            {
+              id: 'ul-split',
+              type: 'editorial_split',
+              reverse: true,
+              eyebrow: 'Editorial Clarity',
+              title: 'Making complex AI automation data effortless to read.',
+              body: 'By pairing structured Swiss grid typography with clear visual hierarchy and modular chart components, the report guides executives smoothly from industry macro-trends to actionable implementation steps.',
+              image: IMG.ultimate,
+              imageCaption: 'Modular editorial layout & data storytelling'
+            },
+            {
+              id: 'ul-next',
+              type: 'next',
+              eyebrow: 'Previous Case Study',
+              title: 'Playfulness through elegance and rhythm: Speexx annual kick-off event branding journey',
+              subtitle: 'Explore how Mallorca and the Alps were distilled into an expandable geometric brand system.',
+              ctaLabel: 'Return to Speexx Case Study',
+              ctaTarget: 'speexx-annual-kick-off-visual',
+              image: IMG.speexx3
+            }
+          ]
+        },
+
+        'studio': {
+          slug: 'studio',
+          title: 'Studio',
+          inNav: true,
+          parentSlug: null,
+          containerClass: 'container',
+          blocks: [
+            {
+              id: 'st-hero',
+              type: 'hero',
+              eyebrow: 'About TK Creative',
+              title: 'Design leadership with clarity, rhythm, and restraint.',
+              subtitle: 'TK Creative partners with ambitious organizations to craft memorable event identities, executive narratives, and modular brand systems.',
+              ctaLabel: 'Explore Selected Work',
+              ctaTarget: 'work',
+              secondaryLabel: 'Get in Touch',
+              secondaryTarget: 'contact',
+              image: IMG.speexx2,
+              imageCaption: 'TK Creative — Visual Systems & Brand Storytelling'
+            },
+            {
+              id: 'st-manifesto',
+              type: 'manifesto',
+              eyebrow: 'Approach',
+              lead: 'Great branding respects the audience’s attention.',
+              body: 'Whether addressing an annual company kick-off or publishing flagship research, thoughtful design turns information into shared conviction.'
+            },
+            {
+              id: 'st-toolkit',
+              type: 'toolkit',
+              eyebrow: 'Core Disciplines',
+              title: 'Professional Toolkit',
+              columns: TOOLKIT_COLUMNS
+            }
+          ]
+        },
+
+        'contact': {
+          slug: 'contact',
+          title: 'Contact',
+          inNav: true,
+          parentSlug: null,
+          containerClass: 'container',
+          blocks: [
+            {
+              id: 'ct-hero',
+              type: 'hero',
+              eyebrow: 'Contact',
+              title: 'Let’s create something memorable together.',
+              subtitle: 'Available for event branding, executive keynote design, editorial reports, and visual identity systems.',
+              ctaLabel: 'View Speexx Case Study',
+              ctaTarget: 'speexx-annual-kick-off-visual',
+              secondaryLabel: 'Return Home',
+              secondaryTarget: 'home',
+              image: '',
+              imageCaption: ''
+            },
+            {
+              id: 'ct-metrics',
+              type: 'metrics',
+              items: [
+                { value: 'hello@tkcreative.design', label: 'Direct Studio Inquiries' },
+                { value: 'Berlin / Remote', label: 'Global Collaboration' },
+                { value: '24 Hours', label: 'Typical Response Time' }
+              ]
+            },
+            {
+              id: 'ct-cta',
+              type: 'cta',
+              eyebrow: 'Selected Work',
+              title: 'Explore recent brand journeys.',
+              subtitle: 'See how geometric abstraction and editorial restraint elevate company milestones.',
+              ctaLabel: 'Browse Work Archive',
+              ctaTarget: 'work'
+            }
+          ]
+        }
+      }
+    };
+
+    let siteData = loadSiteData();
+    let currentSlug = getSlugFromHash() || 'home';
+    let isEditMode = false;
+    let linkContext = null;
+
+    function loadSiteData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.pages && parsed.pages['home']) {
+            return parsed;
+          }
+        }
+      } catch (e) {
+        console.warn('Storage fallback:', e);
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_SITE_DATA));
+    }
+
+    function saveSiteData() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(siteData));
+      } catch (e) {
+        showToast('Could not save to local storage');
+      }
+    }
+
+    function getSlugFromHash() {
+      const clean = window.location.hash.replace(/^#\/?/, '').trim();
+      return clean || 'home';
+    }
+
+    function navigate(slug) {
+      if (!siteData.pages[slug]) {
+        slug = 'home';
+      }
+      currentSlug = slug;
+      if (window.location.hash !== `#/${slug}`) {
+        history.pushState(null, '', `#/${slug}`);
+      }
+      renderAll();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('hashchange', () => {
+      const slug = getSlugFromHash();
+      if (siteData.pages[slug] && slug !== currentSlug) {
+        currentSlug = slug;
+        renderAll();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'e') {
+        e.preventDefault();
+        toggleEditMode();
+      } else if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+
+    function applyThemeAndAccent() {
+      document.documentElement.classList.toggle('dark', siteData.theme === 'dark');
+      const acc = siteData.accentColor || '#0071E3';
+      document.documentElement.style.setProperty('--accent', acc);
+      document.documentElement.style.setProperty('--accent-hover', acc);
+      document.documentElement.style.setProperty('--accent-soft', hexToRgba(acc, 0.11));
+      document.documentElement.style.setProperty('--accent-border', hexToRgba(acc, 0.28));
+    }
+
+    function hexToRgba(hex, alpha) {
+      const clean = hex.replace('#', '');
+      if (clean.length !== 6) return `rgba(0, 113, 227, ${alpha})`;
+      const r = parseInt(clean.slice(0, 2), 16);
+      const g = parseInt(clean.slice(2, 4), 16);
+      const b = parseInt(clean.slice(4, 6), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function toggleTheme() {
+      siteData.theme = siteData.theme === 'dark' ? 'light' : 'dark';
+      applyThemeAndAccent();
+      saveSiteData();
+    }
+
+    function setAccent(color) {
+      siteData.accentColor = color;
+      applyThemeAndAccent();
+      saveSiteData();
+      showToast('Studio accent updated');
+    }
+
+    function toggleEditMode() {
+      isEditMode = !isEditMode;
+      document.body.classList.toggle('cms-editing', isEditMode);
+      const btn = document.getElementById('edit-mode-btn');
+      btn.textContent = isEditMode ? 'Editing' : 'Edit Site';
+      if (isEditMode) {
+        showToast('Edit Mode active — click any text to edit inline');
+      } else {
+        showToast('Changes saved');
+      }
+      renderAll();
+    }
+
+    function toggleMobileDrawer() {
+      document.getElementById('mobile-drawer').classList.toggle('open');
+    }
+
+    function renderAll() {
+      applyThemeAndAccent();
+
+      document.getElementById('brand-title').textContent = siteData.brandName;
+      document.getElementById('footer-brand').textContent = siteData.brandName;
+      const initials = siteData.brandName.trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+      document.getElementById('brand-initials').textContent = initials || 'TK';
+
+      if (!siteData.pages[currentSlug]) {
+        currentSlug = 'home';
+      }
+      const page = siteData.pages[currentSlug];
+
+      document.getElementById('page-count-badge').textContent = Object.keys(siteData.pages).length;
+
+      // Navigation
+      const navPages = Object.values(siteData.pages).filter(p => p.inNav);
+      document.getElementById('desktop-nav').innerHTML = navPages.map(p => `
+        <a href="#/${p.slug}" onclick="navigate('${p.slug}'); return false;" class="nav-link ${p.slug === currentSlug ? 'active' : ''}">
+          ${esc(p.title)}
+        </a>
+      `).join('');
+
+      document.getElementById('mobile-drawer').innerHTML = navPages.map(p => `
+        <a href="#/${p.slug}" onclick="navigate('${p.slug}'); toggleMobileDrawer(); return false;" class="nav-link ${p.slug === currentSlug ? 'active' : ''}" style="font-size:15px;">
+          ${esc(p.title)}
+        </a>
+      `).join('');
+
+      document.getElementById('footer-links').innerHTML = navPages.map(p => `
+        <a href="#/${p.slug}" onclick="navigate('${p.slug}'); return false;">${esc(p.title)}</a>
+      `).join('');
+
+      // Dock Select
+      document.getElementById('dock-page-select').innerHTML = Object.values(siteData.pages).map(p => `
+        <option value="${p.slug}" ${p.slug === currentSlug ? 'selected' : ''}>${esc(p.title)}</option>
+      `).join('');
+
+      // Breadcrumb
+      const bcWrap = document.getElementById('breadcrumb-wrap');
+      const bcBar = document.getElementById('breadcrumb-bar');
+      if (page.parentSlug && siteData.pages[page.parentSlug]) {
+        const parent = siteData.pages[page.parentSlug];
+        bcWrap.style.display = 'block';
+        bcBar.innerHTML = `
+          <a href="#/home" onclick="navigate('home'); return false;">Home</a>
+          <span>/</span>
+          <a href="#/${parent.slug}" onclick="navigate('${parent.slug}'); return false;">${esc(parent.title)}</a>
+          <span>/</span>
+          <span style="color:var(--ink);font-weight:500;">${esc(page.title)}</span>
+        `;
+      } else {
+        bcWrap.style.display = 'none';
+      }
+
+      // Render Blocks
+      const container = document.getElementById('blocks-container');
+      container.innerHTML = '';
+      container.classList.remove('page-reveal');
+      void container.offsetWidth;
+      container.classList.add('page-reveal');
+
+      const wrapClass = page.containerClass || 'container';
+
+      page.blocks.forEach((block, idx) => {
+        const sec = document.createElement('div');
+        sec.className = wrapClass;
+        sec.innerHTML = renderBlockToolbar(idx, page.blocks.length) + renderBlock(block, idx);
+        container.appendChild(sec);
+      });
+    }
+
+    function renderBlockToolbar(idx, total) {
+      if (!isEditMode) return '';
+      return `
+        <div class="block-toolbar">
+          <span>Section 0${idx + 1}</span>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button onclick="moveBlock(${idx}, -1)" ${idx === 0 ? 'disabled' : ''} style="background:none;border:none;cursor:pointer;">↑ Up</button>
+            <button onclick="moveBlock(${idx}, 1)" ${idx === total - 1 ? 'disabled' : ''} style="background:none;border:none;cursor:pointer;">↓ Down</button>
+            <button onclick="deleteBlock(${idx})" style="background:none;border:none;color:#FF3B30;cursor:pointer;">Remove</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderImageFrame(src, caption, blockIdx, fieldPath) {
+      if (!src) {
+        return isEditMode
+          ? `<div style="padding:24px;border-radius:20px;border:1px dashed var(--border);text-align:center;">
+               <button class="mini-edit-btn" onclick="openMediaEditor(${blockIdx}, '${fieldPath}')">+ Add Image URL</button>
+             </div>`
+          : '';
+      }
+      const safeCap = esc(caption || '');
+      return `
+        <div>
+          <div class="media-frame">
+            <img src="${esc(src)}" alt="${safeCap}" loading="lazy" onclick="openLightbox('${esc(src)}', '${safeCap.replace(/'/g, "\\'")}')" onerror="this.src='https://placehold.co/1600x900/111113/F5F5F7?text=TK+Creative+Visual'" />
+            <span class="zoom-hint">Click to enlarge</span>
+            ${isEditMode ? `<button class="mini-edit-btn" style="position:absolute;top:14px;right:14px;" onclick="event.stopPropagation(); openMediaEditor(${blockIdx}, '${fieldPath}')">Change Image</button>` : ''}
+          </div>
+          ${caption ? `<p class="hero-caption">${safeCap}</p>` : ''}
+        </div>
+      `;
+    }
+
+    function renderBlock(b, idx) {
+      const ce = isEditMode ? 'contenteditable="true"' : '';
+
+      if (b.type === 'hero') {
+        return `
+          <section class="hero-block">
+            <div class="hero-copy">
+              <span class="eyebrow" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+              <h1 class="display-xl" ${ce} onblur="updateField(${idx}, 'title', this.innerText)">${esc(b.title)}</h1>
+              <p class="hero-subtitle" ${ce} onblur="updateField(${idx}, 'subtitle', this.innerText)">${esc(b.subtitle)}</p>
+
+              <div class="hero-ctas">
+                ${b.ctaLabel ? `
+                  <div style="display:inline-flex;align-items:center;gap:6px;">
+                    <a href="#/${b.ctaTarget}" onclick="navigate('${b.ctaTarget}'); return false;" class="btn-primary">
+                      ${esc(b.ctaLabel)}
+                    </a>
+                    ${isEditMode ? `<button class="mini-edit-btn" onclick="openLinkEditor(${idx}, 'primary')">Link</button>` : ''}
+                  </div>
+                ` : ''}
+
+                ${b.secondaryLabel ? `
+                  <div style="display:inline-flex;align-items:center;gap:6px;">
+                    <a href="#/${b.secondaryTarget}" onclick="navigate('${b.secondaryTarget}'); return false;" class="link-chevron">
+                      <span>${esc(b.secondaryLabel)}</span><span>&rsaquo;</span>
+                    </a>
+                    ${isEditMode ? `<button class="mini-edit-btn" onclick="openLinkEditor(${idx}, 'secondary')">Link</button>` : ''}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+
+            ${(b.image || isEditMode) ? `
+              <div class="hero-visual">
+                ${renderImageFrame(b.image, b.imageCaption, idx, 'image')}
+              </div>
+            ` : ''}
+          </section>
+        `;
+      }
+
+      if (b.type === 'case_header') {
+        return `
+          <section class="case-header-block">
+            <div>
+              <span class="eyebrow" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+              <h1 class="display-xl" style="margin-top:10px;" ${ce} onblur="updateField(${idx}, 'title', this.innerText)">${esc(b.title)}</h1>
+            </div>
+
+            <div class="metadata-badges">
+              <div class="meta-badge"><span>Client:</span> <strong ${ce} onblur="updateField(${idx}, 'client', this.innerText)">${esc(b.client)}</strong></div>
+              <div class="meta-badge"><span>Discipline:</span> <strong ${ce} onblur="updateField(${idx}, 'discipline', this.innerText)">${esc(b.discipline)}</strong></div>
+              <div class="meta-badge"><span>Year:</span> <strong ${ce} onblur="updateField(${idx}, 'year', this.innerText)">${esc(b.year)}</strong></div>
+            </div>
+
+            <div class="editorial-narrative">
+              <p class="lead-p" ${ce} onblur="updateField(${idx}, 'leadText', this.innerText)">${esc(b.leadText)}</p>
+            </div>
+
+            ${(b.image || isEditMode) ? `
+              <div style="margin-top:12px;">
+                ${renderImageFrame(b.image, b.imageCaption, idx, 'image')}
+              </div>
+            ` : ''}
+          </section>
+        `;
+      }
+
+      if (b.type === 'bento') {
+        return `
+          <section>
+            <div class="bento-header">
+              <span class="eyebrow" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+              <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;">
+                <h2 class="display-lg" ${ce} onblur="updateField(${idx}, 'title', this.innerText)">${esc(b.title)}</h2>
+                ${isEditMode ? `<button class="mini-edit-btn" onclick="addBentoCard(${idx})">+ Add Card</button>` : ''}
+              </div>
+            </div>
+
+            <div class="bento-grid">
+              ${(b.cards || []).map((c, cIdx) => `
+                <article class="bento-card ${c.span === 'wide' ? 'wide' : 'standard'} ${c.dark ? 'dark-card' : ''}">
+                  <div style="display:flex;flex-direction:column;gap:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+                      <span class="eyebrow" style="${c.dark ? 'color:#64D2FF;' : ''}" ${ce} onblur="updateCardField(${idx}, ${cIdx}, 'eyebrow', this.innerText)">${esc(c.eyebrow)}</span>
+                      ${isEditMode ? `
+                        <div style="display:flex;gap:6px;">
+                          <button class="mini-edit-btn" onclick="toggleCardSpan(${idx}, ${cIdx})">${c.span === 'wide' ? 'Wide' : 'Compact'}</button>
+                          <button class="mini-edit-btn" onclick="openCardImageEditor(${idx}, ${cIdx})">Img</button>
+                          ${b.cards.length > 1 ? `<button class="mini-edit-btn" style="color:#FF3B30;" onclick="removeBentoCard(${idx}, ${cIdx})">✕</button>` : ''}
+                        </div>
+                      ` : ''}
+                    </div>
+                    <h3 class="display-md" ${ce} onblur="updateCardField(${idx}, ${cIdx}, 'title', this.innerText)">${esc(c.title)}</h3>
+                    <p class="bento-desc" ${ce} onblur="updateCardField(${idx}, ${cIdx}, 'description', this.innerText)">${esc(c.description)}</p>
+                    <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+                      <a href="#/${c.linkTarget}" onclick="navigate('${c.linkTarget}'); return false;" class="link-chevron" style="${c.dark ? 'color:#64D2FF;' : ''}">
+                        <span>${esc(c.linkLabel)}</span><span>&rsaquo;</span>
+                      </a>
+                      ${isEditMode ? `<button class="mini-edit-btn" onclick="openLinkEditor(${idx}, 'card', ${cIdx})">Link Page</button>` : ''}
+                    </div>
+                  </div>
+                  ${c.image ? `
+                    <div class="bento-img-wrap">
+                      <img src="${esc(c.image)}" alt="${esc(c.title)}" loading="lazy" onerror="this.src='https://placehold.co/1200x750/1D1D1F/F5F5F7?text=TK+Creative'" />
+                    </div>
+                  ` : ''}
+                </article>
+              `).join('')}
+            </div>
+          </section>
+        `;
+      }
+
+      if (b.type === 'editorial_split') {
+        return `
+          <section class="split-editorial ${b.reverse ? 'reverse' : ''}">
+            <div class="split-editorial-text">
+              <span class="eyebrow" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+              <h2 class="display-lg" ${ce} onblur="updateField(${idx}, 'title', this.innerText)">${esc(b.title)}</h2>
+              <p class="editorial-narrative" style="max-width:none;" ${ce} onblur="updateField(${idx}, 'body', this.innerText)">${esc(b.body)}</p>
+            </div>
+            <div class="split-editorial-media">
+              ${renderImageFrame(b.image, b.imageCaption, idx, 'image')}
+            </div>
+          </section>
+        `;
+      }
+
+      if (b.type === 'dual_themes') {
+        return `
+          <section>
+            <div class="bento-header" style="max-width:none;text-align:center;">
+              <span class="eyebrow" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+              <h2 class="display-lg" ${ce} onblur="updateField(${idx}, 'title', this.innerText)">${esc(b.title)}</h2>
+            </div>
+
+            <div class="dual-themes-grid" style="margin-bottom:48px;">
+              <div class="theme-card theme-mallorca">
+                <span class="eyebrow-caps">Destination 01</span>
+                <h3 class="display-md" ${ce} onblur="updateField(${idx}, 'mallorcaTitle', this.innerText)">${esc(b.mallorcaTitle)}</h3>
+                <p style="font-size:15px;color:var(--muted);line-height:1.6;" ${ce} onblur="updateField(${idx}, 'mallorcaBody', this.innerText)">${esc(b.mallorcaBody)}</p>
+              </div>
+              <div class="theme-card theme-alps">
+                <span class="eyebrow-caps">Destination 02</span>
+                <h3 class="display-md" ${ce} onblur="updateField(${idx}, 'alpsTitle', this.innerText)">${esc(b.alpsTitle)}</h3>
+                <p style="font-size:15px;color:var(--muted);line-height:1.6;" ${ce} onblur="updateField(${idx}, 'alpsBody', this.innerText)">${esc(b.alpsBody)}</p>
+              </div>
+            </div>
+
+            <div class="gallery-grid-3">
+              ${(b.slides || []).map((s, sIdx) => `
+                <div>
+                  <div class="media-frame">
+                    <img src="${esc(s.src)}" alt="${esc(s.caption)}" loading="lazy" onclick="openLightbox('${esc(s.src)}', '${esc(s.caption).replace(/'/g, "\\'")}')" onerror="this.src='https://placehold.co/1200x675/111113/F5F5F7?text=Speexx+Slide'" />
+                    <span class="zoom-hint">Enlarge slide</span>
+                  </div>
+                  <p class="hero-caption">${esc(s.caption)}</p>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+        `;
+      }
+
+      if (b.type === 'principles') {
+        return `
+          <section>
+            <div class="bento-header" style="max-width:none;">
+              <span class="eyebrow" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+              <h2 class="display-lg" ${ce} onblur="updateField(${idx}, 'title', this.innerText)">${esc(b.title)}</h2>
+            </div>
+
+            <div class="principles-grid" style="margin-bottom:48px;">
+              ${(b.principles || []).map((p, pIdx) => `
+                <div class="principle-card">
+                  <span class="eyebrow-caps">0${pIdx + 1}</span>
+                  <h3 class="display-md" style="font-size:1.25rem;" ${ce} onblur="updatePrincipleField(${idx}, ${pIdx}, 'title', this.innerText)">${esc(p.title)}</h3>
+                  <p class="bento-desc" style="font-size:14px;" ${ce} onblur="updatePrincipleField(${idx}, ${pIdx}, 'description', this.innerText)">${esc(p.description)}</p>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="gallery-grid-2">
+              ${(b.slides || []).map((s, sIdx) => `
+                <div>
+                  <div class="media-frame">
+                    <img src="${esc(s.src)}" alt="${esc(s.caption)}" loading="lazy" onclick="openLightbox('${esc(s.src)}', '${esc(s.caption).replace(/'/g, "\\'")}')" onerror="this.src='https://placehold.co/1200x675/111113/F5F5F7?text=Composition+Study'" />
+                    <span class="zoom-hint">Enlarge slide</span>
+                  </div>
+                  <p class="hero-caption">${esc(s.caption)}</p>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+        `;
+      }
+
+      if (b.type === 'metrics') {
+        return `
+          <section class="metrics-strip">
+            ${(b.items || []).map((m, mIdx) => `
+              <div class="metric-item">
+                <div class="metric-val" ${ce} onblur="updateMetricField(${idx}, ${mIdx}, 'value', this.innerText)">${esc(m.value)}</div>
+                <div class="metric-lbl" ${ce} onblur="updateMetricField(${idx}, ${mIdx}, 'label', this.innerText)">${esc(m.label)}</div>
+              </div>
+            `).join('')}
+          </section>
+        `;
+      }
+
+      if (b.type === 'manifesto') {
+        return `
+          <section class="manifesto-block">
+            <span class="eyebrow-caps" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+            <h2 class="manifesto-text">
+              <span ${ce} onblur="updateField(${idx}, 'lead', this.innerText)">${esc(b.lead)}</span>
+              <span class="manifesto-muted" ${ce} onblur="updateField(${idx}, 'body', this.innerText)"> ${esc(b.body)}</span>
+            </h2>
+          </section>
+        `;
+      }
+
+      if (b.type === 'toolkit') {
+        return `
+          <section>
+            <div class="bento-header">
+              <span class="eyebrow" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+              <h2 class="display-lg" ${ce} onblur="updateField(${idx}, 'title', this.innerText)">${esc(b.title)}</h2>
+            </div>
+            <div class="toolkit-grid">
+              ${(b.columns || []).map((col, colIdx) => `
+                <div class="toolkit-card">
+                  <h3 class="display-md" style="font-size:1.3rem;" ${ce} onblur="updateToolkitTitle(${idx}, ${colIdx}, this.innerText)">${esc(col.title)}</h3>
+                  <ul class="toolkit-list">
+                    ${col.items.map((item, iIdx) => `
+                      <li>
+                        <span class="toolkit-dot"></span>
+                        <span ${ce} onblur="updateToolkitItem(${idx}, ${colIdx}, ${iIdx}, this.innerText)">${esc(item)}</span>
+                      </li>
+                    `).join('')}
+                  </ul>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+        `;
+      }
+
+      if (b.type === 'next') {
+        return `
+          <section class="next-banner">
+            <div class="next-banner-copy">
+              <span class="eyebrow" style="color:#64D2FF;" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+              <h2 class="display-lg" style="font-size:clamp(1.6rem, 3vw, 2.35rem);" ${ce} onblur="updateField(${idx}, 'title', this.innerText)">${esc(b.title)}</h2>
+              <p style="font-size:15px;color:#A1A1A6;line-height:1.55;" ${ce} onblur="updateField(${idx}, 'subtitle', this.innerText)">${esc(b.subtitle)}</p>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+                <a href="#/${b.ctaTarget}" onclick="navigate('${b.ctaTarget}'); return false;" class="btn-primary">
+                  ${esc(b.ctaLabel)}
+                </a>
+                ${isEditMode ? `<button class="mini-edit-btn" onclick="openLinkEditor(${idx}, 'primary')">Link Page</button>` : ''}
+              </div>
+            </div>
+            ${b.image ? `
+              <div class="next-banner-media">
+                <img src="${esc(b.image)}" alt="${esc(b.title)}" loading="lazy" onerror="this.src='https://placehold.co/1200x800/1D1D1F/F5F5F7?text=Next+Project'" />
+              </div>
+            ` : ''}
+          </section>
+        `;
+      }
+
+      if (b.type === 'cta') {
+        return `
+          <section class="cta-center-banner">
+            <span class="eyebrow" style="color:#64D2FF;position:relative;" ${ce} onblur="updateField(${idx}, 'eyebrow', this.innerText)">${esc(b.eyebrow)}</span>
+            <h2 class="display-lg" style="position:relative;max-width:680px;" ${ce} onblur="updateField(${idx}, 'title', this.innerText)">${esc(b.title)}</h2>
+            <p style="position:relative;color:#A1A1A6;max-width:540px;font-size:16px;" ${ce} onblur="updateField(${idx}, 'subtitle', this.innerText)">${esc(b.subtitle)}</p>
+            <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:8px;">
+              <a href="#/${b.ctaTarget}" onclick="navigate('${b.ctaTarget}'); return false;" class="btn-primary">
+                ${esc(b.ctaLabel)}
+              </a>
+              ${isEditMode ? `<button class="mini-edit-btn" onclick="openLinkEditor(${idx}, 'primary')">Link Page</button>` : ''}
+            </div>
+          </section>
+        `;
+      }
+
+      return '';
+    }
+
+    // Inline Editing Mutators
+    function updateField(idx, field, val) {
+      const b = siteData.pages[currentSlug].blocks[idx];
+      if (b) { b[field] = val.trim(); saveSiteData(); }
+    }
+
+    function updateCardField(idx, cIdx, field, val) {
+      const c = siteData.pages[currentSlug].blocks[idx]?.cards?.[cIdx];
+      if (c) { c[field] = val.trim(); saveSiteData(); }
+    }
+
+    function updatePrincipleField(idx, pIdx, field, val) {
+      const p = siteData.pages[currentSlug].blocks[idx]?.principles?.[pIdx];
+      if (p) { p[field] = val.trim(); saveSiteData(); }
+    }
+
+    function updateMetricField(idx, mIdx, field, val) {
+      const m = siteData.pages[currentSlug].blocks[idx]?.items?.[mIdx];
+      if (m) { m[field] = val.trim(); saveSiteData(); }
+    }
+
+    function updateToolkitTitle(idx, colIdx, val) {
+      const col = siteData.pages[currentSlug].blocks[idx]?.columns?.[colIdx];
+      if (col) { col.title = val.trim(); saveSiteData(); }
+    }
+
+    function updateToolkitItem(idx, colIdx, iIdx, val) {
+      const col = siteData.pages[currentSlug].blocks[idx]?.columns?.[colIdx];
+      if (col) { col.items[iIdx] = val.trim(); saveSiteData(); }
+    }
+
+    // Section Management
+    function addBlock(type) {
+      const page = siteData.pages[currentSlug];
+      const id = 'b-' + Date.now();
+      const map = {
+        hero: {
+          id, type: 'hero', eyebrow: 'New Showcase', title: 'Playfulness through elegance and rhythm.',
+          subtitle: 'Click any text while Edit Mode is active to customize this section.',
+          ctaLabel: 'Explore Work', ctaTarget: 'work', secondaryLabel: 'Contact', secondaryTarget: 'contact',
+          image: IMG.speexx3, imageCaption: 'Showcase Visual'
+        },
+        bento: {
+          id, type: 'bento', eyebrow: 'Highlights', title: 'Engineered with clarity.',
+          cards: [
+            { span: 'wide', dark: true, eyebrow: '01', title: 'Featured System', description: 'Link any card to an interconnected page.', linkLabel: 'Explore', linkTarget: 'work', image: IMG.speexx3 },
+            { span: 'standard', dark: false, eyebrow: '02', title: 'Editorial Story', description: 'Modular card layout.', linkLabel: 'Read More', linkTarget: 'studio', image: IMG.ultimate }
+          ]
+        },
+        case_header: {
+          id, type: 'case_header', eyebrow: 'Case Study', title: 'Cinematic project headline and rhythm',
+          client: 'Client Name', discipline: 'Visual System', year: '2026',
+          leadText: 'Detailed introductory narrative explaining the creative direction.',
+          image: IMG.speexx3, imageCaption: 'Hero Visual'
+        },
+        editorial_split: {
+          id, type: 'editorial_split', reverse: false, eyebrow: 'Feature', title: 'Simple, geometric, expandable.',
+          body: 'Combine clean narrative copy with high-resolution case study spreads.',
+          image: IMG.speexx2, imageCaption: 'Visual Spread'
+        },
+        dual_themes: {
+          id, type: 'dual_themes', eyebrow: 'Dual Expressions', title: 'Two environments, one system.',
+          mallorcaTitle: 'Theme A — Warm Horizon', mallorcaBody: 'Sunlit gradients and rhythmic wave lines.',
+          alpsTitle: 'Theme B — Crisp Altitude', alpsBody: 'Cool atmospheric depth and triangular geometry.',
+          slides: [
+            { src: IMG.speexx5, caption: 'Slide 05' },
+            { src: IMG.speexx7, caption: 'Slide 07' },
+            { src: IMG.speexx9, caption: 'Slide 09' }
+          ]
+        },
+        principles: {
+          id, type: 'principles', eyebrow: 'Principles', title: 'Visual grammar.',
+          principles: [
+            { title: 'Negative space', description: 'Generous breathing room.' },
+            { title: 'Geometric lines', description: 'Rhythmic directional structure.' },
+            { title: 'Quiet gradients', description: 'Smooth atmospheric depth.' }
+          ],
+          slides: [{ src: IMG.speexx16, caption: 'Composition Study' }]
+        },
+        metrics: {
+          id, type: 'metrics',
+          items: [
+            { value: '100%', label: 'Bespoke Visual Grammar' },
+            { value: '2 Themes', label: 'Mallorca & Alps Expressions' },
+            { value: '0ms', label: 'Instant Page Routing' }
+          ]
+        },
+        manifesto: {
+          id, type: 'manifesto', eyebrow: 'Philosophy',
+          lead: 'Simplicity amplifies emotion.', body: 'Every geometric element serves rhythm, clarity, and shared engagement.'
+        },
+        toolkit: {
+          id, type: 'toolkit', eyebrow: 'Capabilities', title: 'Professional Toolkit', columns: TOOLKIT_COLUMNS
+        },
+        next: {
+          id, type: 'next', eyebrow: 'Next Project', title: 'Explore another brand transformation',
+          subtitle: 'Connect seamlessly to any page in your studio graph.',
+          ctaLabel: 'Open Case Study', ctaTarget: 'work', image: IMG.ultimate
+        }
+      };
+
+      if (map[type]) {
+        page.blocks.push(map[type]);
+        saveSiteData();
+        renderAll();
+        showToast('Section added');
+      }
+    }
+
+    function moveBlock(idx, dir) {
+      const arr = siteData.pages[currentSlug].blocks;
+      const target = idx + dir;
+      if (target < 0 || target >= arr.length) return;
+      [arr[idx], arr[target]] = [arr[target], arr[idx]];
+      saveSiteData();
+      renderAll();
+    }
+
+    function deleteBlock(idx) {
+      const arr = siteData.pages[currentSlug].blocks;
+      if (arr.length <= 1) {
+        showToast('At least one section is required');
+        return;
+      }
+      arr.splice(idx, 1);
+      saveSiteData();
+      renderAll();
+      showToast('Section removed');
+    }
+
+    function addBentoCard(idx) {
+      const b = siteData.pages[currentSlug].blocks[idx];
+      if (b?.cards) {
+        b.cards.push({
+          span: 'standard', dark: false, eyebrow: 'New Card', title: 'Project Title',
+          description: 'Click Link Page to connect this card to any subpage.',
+          linkLabel: 'Explore', linkTarget: 'home', image: IMG.speexx2
+        });
+        saveSiteData();
+        renderAll();
+      }
+    }
+
+    function toggleCardSpan(idx, cIdx) {
+      const c = siteData.pages[currentSlug].blocks[idx]?.cards?.[cIdx];
+      if (c) {
+        c.span = c.span === 'wide' ? 'standard' : 'wide';
+        saveSiteData();
+        renderAll();
+      }
+    }
+
+    function removeBentoCard(idx, cIdx) {
+      const b = siteData.pages[currentSlug].blocks[idx];
+      if (b?.cards?.length > 1) {
+        b.cards.splice(cIdx, 1);
+        saveSiteData();
+        renderAll();
+      }
+    }
+
+    // Link & Media Editor Modal
+    function openLinkEditor(blockIdx, mode, cardIdx = null) {
+      linkContext = { type: 'link', blockIdx, mode, cardIdx };
+      const b = siteData.pages[currentSlug].blocks[blockIdx];
+      let label = '', target = 'home';
+
+      if (mode === 'primary') { label = b.ctaLabel || ''; target = b.ctaTarget || 'home'; }
+      else if (mode === 'secondary') { label = b.secondaryLabel || ''; target = b.secondaryTarget || 'home'; }
+      else if (mode === 'card') { label = b.cards[cardIdx].linkLabel || ''; target = b.cards[cardIdx].linkTarget || 'home'; }
+
+      document.getElementById('link-modal-title').textContent = 'Link Destination';
+      document.getElementById('link-label-group').style.display = 'block';
+      document.getElementById('link-target-group').style.display = 'block';
+      document.getElementById('image-url-group').style.display = 'none';
+      document.getElementById('ondemand-page-box').style.display = 'none';
+
+      document.getElementById('link-label-input').value = label;
+      const sel = document.getElementById('link-target-select');
+      sel.innerHTML = Object.values(siteData.pages).map(p =>
+        `<option value="${p.slug}" ${p.slug === target ? 'selected' : ''}>${esc(p.title)} (#/${p.slug})</option>`
+      ).join('') + `<option value="__NEW__">+ Create & Link New Subpage On-Demand...</option>`;
+
+      openModal('link-modal');
+    }
+
+    function openMediaEditor(blockIdx, fieldPath) {
+      linkContext = { type: 'media', blockIdx, fieldPath };
+      const b = siteData.pages[currentSlug].blocks[blockIdx];
+      document.getElementById('link-modal-title').textContent = 'Update Visual Image';
+      document.getElementById('link-label-group').style.display = 'none';
+      document.getElementById('link-target-group').style.display = 'none';
+      document.getElementById('ondemand-page-box').style.display = 'none';
+      document.getElementById('image-url-group').style.display = 'block';
+      document.getElementById('image-url-input').value = b[fieldPath] || '';
+      openModal('link-modal');
+    }
+
+    function openCardImageEditor(blockIdx, cardIdx) {
+      linkContext = { type: 'card-media', blockIdx, cardIdx };
+      const c = siteData.pages[currentSlug].blocks[blockIdx].cards[cardIdx];
+      document.getElementById('link-modal-title').textContent = 'Update Card Image';
+      document.getElementById('link-label-group').style.display = 'none';
+      document.getElementById('link-target-group').style.display = 'none';
+      document.getElementById('ondemand-page-box').style.display = 'none';
+      document.getElementById('image-url-group').style.display = 'block';
+      document.getElementById('image-url-input').value = c.image || '';
+      openModal('link-modal');
+    }
+
+    function onLinkTargetChange(val) {
+      document.getElementById('ondemand-page-box').style.display = val === '__NEW__' ? 'block' : 'none';
+    }
+
+    function saveLinkModal() {
+      if (!linkContext) return;
+      const b = siteData.pages[currentSlug].blocks[linkContext.blockIdx];
+
+      if (linkContext.type === 'media') {
+        b[linkContext.fieldPath] = document.getElementById('image-url-input').value.trim();
+        saveSiteData();
+        closeModal('link-modal');
+        renderAll();
+        showToast('Image updated');
+        return;
+      }
+
+      if (linkContext.type === 'card-media') {
+        b.cards[linkContext.cardIdx].image = document.getElementById('image-url-input').value.trim();
+        saveSiteData();
+        closeModal('link-modal');
+        renderAll();
+        showToast('Card image updated');
+        return;
+      }
+
+      const label = document.getElementById('link-label-input').value.trim() || 'Explore';
+      let target = document.getElementById('link-target-select').value;
+      let createdNew = false;
+
+      if (target === '__NEW__') {
+        const newTitle = document.getElementById('ondemand-title-input').value.trim();
+        if (!newTitle) {
+          showToast('Enter a title for the new page');
+          return;
+        }
+        const inNav = document.getElementById('ondemand-nav-check').checked;
+        target = createNewPage(newTitle, 'case-study', inNav, currentSlug);
+        createdNew = true;
+      }
+
+      if (linkContext.mode === 'primary') { b.ctaLabel = label; b.ctaTarget = target; }
+      else if (linkContext.mode === 'secondary') { b.secondaryLabel = label; b.secondaryTarget = target; }
+      else if (linkContext.mode === 'card') {
+        b.cards[linkContext.cardIdx].linkLabel = label;
+        b.cards[linkContext.cardIdx].linkTarget = target;
+      }
+
+      saveSiteData();
+      closeModal('link-modal');
+      if (createdNew) {
+        navigate(target);
+        showToast(`Created & opened "${siteData.pages[target].title}"`);
+      } else {
+        renderAll();
+        showToast('Link updated');
+      }
+    }
+
+    // Page Creation & Settings
+    function slugify(str) {
+      let base = str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'page';
+      let slug = base, n = 2;
+      while (siteData.pages[slug]) slug = `${base}-${n++}`;
+      return slug;
+    }
+
+    function createNewPage(title, template = 'case-study', inNav = true, parentSlug = null) {
+      const slug = slugify(title);
+      const id = 'b-' + Date.now();
+      let blocks = [];
+      let containerClass = template === 'case-study' ? 'container-editorial' : 'container';
+
+      if (template === 'case-study') {
+        blocks = [
+          {
+            id: id + '-1', type: 'case_header', eyebrow: 'Case Study', title: title,
+            client: 'Client', discipline: 'Brand & Visual System', year: '2026',
+            leadText: 'Editorial visual storytelling and modular brand architecture.',
+            image: IMG.speexx3, imageCaption: title
+          },
+          {
+            id: id + '-2', type: 'editorial_split', reverse: false, eyebrow: 'Narrative', title: 'Crafted with clarity and rhythm.',
+            body: 'Switch on Edit Mode anytime to customize copy, swap visuals, and add new sections.',
+            image: IMG.speexx2, imageCaption: 'Detail Spread'
+          }
+        ];
+      } else if (template === 'editorial') {
+        blocks = [
+          {
+            id: id + '-1', type: 'hero', eyebrow: 'TK Creative', title: title,
+            subtitle: 'An editorial page created on demand.',
+            ctaLabel: 'Return Home', ctaTarget: 'home', secondaryLabel: '', secondaryTarget: '',
+            image: '', imageCaption: ''
+          },
+          {
+            id: id + '-2', type: 'manifesto', eyebrow: 'Perspective',
+            lead: 'Restraint creates impact.', body: 'Click any text in Edit Mode to refine your story.'
+          }
+        ];
+      } else {
+        blocks = [
+          {
+            id: id + '-1', type: 'hero', eyebrow: 'New Page', title: title,
+            subtitle: 'Add modular sections below to compose this page.',
+            ctaLabel: 'Return Home', ctaTarget: 'home', secondaryLabel: '', secondaryTarget: '',
+            image: '', imageCaption: ''
+          }
+        ];
+      }
+
+      siteData.pages[slug] = { slug, title, inNav, parentSlug, containerClass, blocks };
+      saveSiteData();
+      return slug;
+    }
+
+    function openNewPageModal() {
+      document.getElementById('new-page-title').value = '';
+      openModal('new-page-modal');
+    }
+
+    function createPageFromModal() {
+      const title = document.getElementById('new-page-title').value.trim();
+      if (!title) { showToast('Please enter a page title'); return; }
+      const tpl = document.getElementById('new-page-template').value;
+      const inNav = document.getElementById('new-page-in-nav').checked;
+      const slug = createNewPage(title, tpl, inNav, null);
+      closeModal('new-page-modal');
+      navigate(slug);
+      showToast(`Created "${title}"`);
+    }
+
+    function openPageSettingsModal() {
+      const page = siteData.pages[currentSlug];
+      document.getElementById('settings-brand').value = siteData.brandName;
+      document.getElementById('settings-page-title').value = page.title;
+      document.getElementById('settings-in-nav').checked = !!page.inNav;
+      document.getElementById('delete-page-btn').style.display = currentSlug === 'home' ? 'none' : 'inline-block';
+      openModal('settings-modal');
+    }
+
+    function saveSettingsModal() {
+      const brand = document.getElementById('settings-brand').value.trim();
+      const title = document.getElementById('settings-page-title').value.trim();
+      const inNav = document.getElementById('settings-in-nav').checked;
+      if (brand) siteData.brandName = brand;
+      if (title) siteData.pages[currentSlug].title = title;
+      siteData.pages[currentSlug].inNav = inNav;
+      saveSiteData();
+      closeModal('settings-modal');
+      renderAll();
+      showToast('Settings saved');
+    }
+
+    function deleteCurrentPage() {
+      if (currentSlug === 'home') return;
+      const title = siteData.pages[currentSlug].title;
+      delete siteData.pages[currentSlug];
+      saveSiteData();
+      closeModal('settings-modal');
+      navigate('home');
+      showToast(`Deleted "${title}"`);
+    }
+
+    // Site Map Modal
+    function openSiteMapModal() {
+      const list = document.getElementById('sitemap-list');
+      list.innerHTML = Object.values(siteData.pages).map(p => {
+        const links = new Set();
+        p.blocks.forEach(b => {
+          if (b.ctaTarget && siteData.pages[b.ctaTarget]) links.add(b.ctaTarget);
+          if (b.secondaryTarget && siteData.pages[b.secondaryTarget]) links.add(b.secondaryTarget);
+          if (b.cards) b.cards.forEach(c => { if (c.linkTarget && siteData.pages[c.linkTarget]) links.add(c.linkTarget); });
+        });
+        const isCurrent = p.slug === currentSlug;
+        return `
+          <div style="padding:16px 20px;border-radius:20px;border:1px solid ${isCurrent ? 'var(--accent)' : 'var(--border)'};background:${isCurrent ? 'var(--accent-soft)' : 'var(--surface)'};display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+            <div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <strong style="font-size:15px;">${esc(p.title)}</strong>
+                <code style="font-size:11px;color:var(--muted);">#/${p.slug}</code>
+                ${p.inNav ? '<span class="count-badge">Nav</span>' : ''}
+              </div>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;font-size:12px;color:var(--muted);">
+                <span>Links to:</span>
+                ${links.size ? Array.from(links).map(t => `
+                  <button class="mini-edit-btn" onclick="closeModal('sitemap-modal'); navigate('${t}');">${esc(siteData.pages[t].title)} &rsaquo;</button>
+                `).join('') : '<span>—</span>'}
+              </div>
+            </div>
+            <button class="pill-btn" style="background:var(--elevated);border-color:var(--border);" onclick="closeModal('sitemap-modal'); navigate('${p.slug}');">Open</button>
+          </div>
+        `;
+      }).join('');
+      openModal('sitemap-modal');
+    }
+
+    // Export / Import / Reset
+    function toggleExportPopover() {
+      document.getElementById('export-popover').classList.toggle('open');
+    }
+
+    function exportJSON() {
+      const blob = new Blob([JSON.stringify(siteData, null, 2)], { type: 'application/json' });
+      downloadBlob(blob, 'tk-creative-cms.json');
+      showToast('CMS JSON downloaded');
+    }
+
+    function importJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const parsed = JSON.parse(ev.target.result);
+          if (parsed?.pages) {
+            siteData = parsed;
+            saveSiteData();
+            navigate('home');
+            showToast('Site imported');
+          }
+        } catch {
+          showToast('Invalid JSON file');
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    }
+
+    function exportStandaloneHTML() {
+      const clone = document.documentElement.cloneNode(true);
+      clone.querySelector('body').classList.remove('cms-editing');
+      ['studio-dock', 'link-modal', 'new-page-modal', 'settings-modal', 'edit-mode-btn'].forEach(id => {
+        const el = clone.querySelector('#' + id);
+        if (el) el.remove();
+      });
+      const addBox = clone.querySelector('.add-section-box');
+      if (addBox) addBox.remove();
+
+      let html = '<!DOCTYPE html>\n' + clone.outerHTML;
+      const baked = JSON.stringify(siteData);
+      html = html.replace(/const DEFAULT_SITE_DATA = \{[\s\S]*?\n    \};/, `const DEFAULT_SITE_DATA = ${baked};`);
+      html = html.replace(/function loadSiteData\(\) \{[\s\S]*?\n    \}/, `function loadSiteData() { return JSON.parse(JSON.stringify(DEFAULT_SITE_DATA)); }`);
+
+      downloadBlob(new Blob([html], { type: 'text/html' }), 'tk-creative-production.html');
+      showToast('Standalone production HTML exported');
+    }
+
+    function resetDemoSite() {
+      localStorage.removeItem(STORAGE_KEY);
+      siteData = JSON.parse(JSON.stringify(DEFAULT_SITE_DATA));
+      navigate('home');
+      showToast('Studio defaults restored');
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Lightbox & Utilities
+    function openLightbox(src, caption) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox-caption').textContent = caption || '';
+      document.getElementById('lightbox').classList.add('open');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function esc(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function showToast(msg) {
+      const wrap = document.getElementById('toast-wrap');
+      const el = document.createElement('div');
+      el.className = 'toast-pill';
+      el.textContent = msg;
+      wrap.appendChild(el);
+      setTimeout(() => el.remove(), 2400);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!window.location.hash) {
+        history.replaceState(null, '', '#/home');
+      }
+      currentSlug = getSlugFromHash();
+      renderAll();
+    });
+  </script>
+</body>
+</html>
